@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f5f6f2">
+<title>中值定理 · 看见那条切线</title>
+<style>
+:root{color-scheme:light;--bg:#f5f6f2;--paper:#fff;--ink:#202d2a;--muted:#697770;--line:#dfe5df;--green:#21735b;--soft:#eaf3ed;--blue:#3875b8;--orange:#d16a43;--amber:#93631e;--amberbg:#fff4df;--serif:Georgia,"Times New Roman","Songti SC",serif}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,"Segoe UI","Microsoft YaHei",sans-serif;font-size:14px;line-height:1.65}button,input,select{font:inherit}button,select,input[type=range],input[type=checkbox]{cursor:pointer}button{color:inherit}button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,[data-drag]:focus-visible{outline:3px solid #79a98e;outline-offset:4px}button{touch-action:manipulation}button:disabled{cursor:default;opacity:.45}a{color:var(--green)}.page{width:min(1380px,calc(100% - 72px));margin:auto}.top{border-bottom:1px solid var(--line);background:#ffffffb8}.top-inner{height:64px;display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{font-weight:650;letter-spacing:.03em;display:flex;align-items:center;gap:11px}.brand-mark{font-family:var(--serif);color:var(--green);font-size:27px;font-style:italic}.top-note{font-size:12px;color:var(--muted)}.hero{padding:35px 0 26px;display:flex;align-items:flex-end;justify-content:space-between;gap:24px}.eyebrow{color:var(--green);font-size:11px;letter-spacing:.18em;font-weight:650;margin:0 0 8px}.hero h1{font-size:clamp(25px,3vw,38px);font-weight:650;line-height:1.35;letter-spacing:-.035em;margin:0 0 10px}.hero h1 em{font-style:normal;color:var(--green)}.hero p{color:var(--muted);margin:0;max-width:720px;font-size:14px}.hero-aside{font-family:var(--serif);color:#809a89;font-style:italic;white-space:nowrap;font-size:25px;padding-bottom:5px}.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:22px}.tab{display:flex;align-items:center;gap:13px;text-align:left;border:1px solid var(--line);border-radius:9px;background:#ffffff8c;padding:14px 17px;transition:background .15s,border-color .15s}.tab:hover{background:#fff;border-color:#aebfb1}.tab[aria-selected=true]{background:var(--green);color:#fff;border-color:var(--green)}.tab-number{font-family:var(--serif);font-size:23px;opacity:.5}.tab strong{font-size:15px;font-weight:600;display:block}.tab small{font-size:11px;opacity:.7;display:block;letter-spacing:.02em}.workspace{display:grid;grid-template-columns:300px minmax(0,1fr);gap:22px;align-items:start}.theory{padding:22px 23px;background:var(--paper);border:1px solid var(--line);border-radius:12px}.section-index{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:11px;letter-spacing:.08em}.section-index:before{content:"";width:18px;height:2px;background:var(--green)}.theory h2{font-size:23px;margin:11px 0 7px;font-weight:600;line-height:1.4}.intuition{color:var(--muted);margin:0 0 19px;line-height:1.85;font-size:13px}.formula{background:var(--soft);border-radius:7px;padding:17px 10px;margin-bottom:19px;text-align:center;font-family:var(--serif);font-size:20px;color:var(--green);overflow-wrap:anywhere}.formula small{display:block;font-family:"Segoe UI","Microsoft YaHei",sans-serif;font-size:11px;margin-top:8px;line-height:1.6;color:var(--muted)}.frac{display:inline-flex;vertical-align:middle;align-items:center;flex-direction:column;margin:0 4px;line-height:1.4}.frac>span:first-child{border-bottom:1px solid currentColor;padding:0 4px 2px}.frac>span:last-child{padding-top:2px}.math{font-family:var(--serif);font-size:1.15em}.conditions-title{font-size:12px;font-weight:650;margin:0 0 10px}.condition{display:flex;align-items:flex-start;gap:9px;margin:9px 0;font-size:12px;color:#52625a}.condition-icon{width:17px;height:17px;flex-shrink:0;border-radius:50%;background:var(--soft);color:var(--green);display:inline-flex;align-items:center;justify-content:center;font-size:11px;margin-top:2px}.condition.fail .condition-icon{background:var(--amberbg);color:var(--amber)}.condition.fail{color:var(--amber)}.guarantee{border-top:1px solid var(--line);margin:17px 0 0;padding-top:16px;font-size:12px;line-height:1.8}.guarantee strong{color:var(--green);font-weight:600}.theory details{border-top:1px solid var(--line);margin-top:17px;padding-top:13px;font-size:12px}.theory summary{cursor:pointer;font-weight:600}.theory details p{color:var(--muted);line-height:1.9;margin-bottom:0}.lab{background:var(--paper);border:1px solid var(--line);border-radius:12px;overflow:hidden;min-width:0}.lab-head{padding:18px 23px 13px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}.lab-heading{display:flex;gap:9px;align-items:center}.lab-heading h3{font-size:14px;font-weight:600;margin:0}.live-dot{width:6px;height:6px;background:var(--green);border-radius:50%}.legend{display:flex;gap:15px;flex-wrap:wrap;font-size:11px;color:var(--muted)}.legend-item{display:flex;gap:6px;align-items:center}.swatch{width:19px;border-top:2px solid var(--green)}.swatch.secant{border-top:2px dashed var(--blue)}.swatch.tangent{border-color:var(--orange)}.plot-topline{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 23px 8px;flex-wrap:wrap}.function-label{font-family:var(--serif);font-size:16px;color:var(--green)}.plot-badge{font-size:11px;color:var(--muted);background:var(--bg);padding:3px 9px;border-radius:4px}.plot-wrap{height:380px;margin:0 10px;position:relative;min-width:0}.plot{display:block;width:100%;height:100%;overflow:visible;user-select:none;-webkit-user-select:none;touch-action:none}.plot text{font-family:"Segoe UI","Microsoft YaHei",sans-serif;font-size:11px;fill:var(--muted)}.plot .axis-label{font-family:var(--serif);font-size:14px;fill:var(--ink)}.plot .point-label{font-family:var(--serif);font-size:14px;font-weight:600;paint-order:stroke;stroke:#fff;stroke-width:4px;stroke-linejoin:round;fill:var(--blue)}.plot .xi-label{fill:var(--orange)}.plot .grid{stroke:#e9eeea;stroke-width:1}.plot .axis{stroke:#c0cdc3;stroke-width:1}.plot .curve{fill:none;stroke:var(--green);stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round}.plot .curve-context{opacity:.25;stroke-width:2}.plot .active-interval{stroke-width:3.2}.plot .secant-line{stroke:var(--blue);stroke-width:1.8;stroke-dasharray:6 5;fill:none}.plot .tangent-line{stroke:var(--orange);stroke-width:2;fill:none}.plot .projection{stroke:#a6b8ac;stroke-width:1;stroke-dasharray:3 4}.plot .dragger{cursor:grab}.plot .dragger:active{cursor:grabbing}.plot .dragger .halo{fill:transparent;stroke:none}.plot .dragger:hover .point{stroke-width:3.5}.plot .point{stroke:#fff;stroke-width:2.5;fill:var(--blue)}.plot .xi-point{fill:var(--orange)}.plot .ghost-dot{fill:#fff;stroke:var(--orange);stroke-width:1.4}.plot-status{display:flex;align-items:flex-start;gap:9px;margin:7px 23px 0;padding:11px 13px;border-radius:6px;background:var(--soft);font-size:12px;color:var(--green);min-height:43px;line-height:1.7}.plot-status.warning{background:var(--amberbg);color:var(--amber)}.status-symbol{font-size:15px;line-height:1.35;flex-shrink:0}.metrics{display:grid;grid-template-columns:repeat(3,1fr);margin:16px 23px 18px;gap:15px}.metric{min-width:0;border-left:1px solid var(--line);padding-left:15px}.metric:first-child{border-left:0;padding-left:0}.metric-label{color:var(--muted);font-size:11px;display:block}.metric-value{font-family:var(--serif);font-size:26px;line-height:1.5;font-variant-numeric:tabular-nums;white-space:nowrap}.metric-note{font-size:10px;color:var(--muted);display:block;line-height:1.6}.controls{border-top:1px solid var(--line);background:#fafbf8;padding:17px 23px 20px}.controls-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px}.sample-control{display:flex;align-items:center;gap:9px;min-width:0}.sample-control label{font-size:11px;color:var(--muted);white-space:nowrap}.sample-control select{font-size:12px;border:1px solid #d5dfd6;background:#fff;border-radius:5px;padding:7px 27px 7px 9px;color:var(--ink);min-width:0;max-width:230px}.tools{display:flex;align-items:center;gap:8px}.small-button{border:1px solid #d5dfd6;background:#fff;border-radius:5px;padding:6px 10px;font-size:11px;line-height:1.7;white-space:nowrap}.small-button:hover{border-color:#94ad9c}.small-button[aria-pressed=true]{background:var(--amberbg);border-color:#e6c990;color:var(--amber)}.sliders{display:grid;grid-template-columns:1fr 1fr;gap:15px 25px}.slider-heading{display:flex;align-items:center;justify-content:space-between;font-size:12px;margin-bottom:6px;gap:8px}.slider-heading output{font-variant-numeric:tabular-nums;font-family:var(--serif);color:var(--blue);font-size:15px}.slider-field input[type=range]{display:block;width:100%;height:21px;accent-color:var(--blue);margin:0}.slider-field.manual input[type=range]{accent-color:var(--orange)}.hint{color:var(--muted);font-size:11px;margin:12px 0 0;line-height:1.75}.xi-controls{border-top:1px solid var(--line);margin-top:15px;padding-top:13px;display:grid;grid-template-columns:1fr;gap:9px}.xi-top{display:flex;align-items:center;gap:10px;justify-content:space-between;flex-wrap:wrap}.auto-label{display:flex;align-items:center;gap:7px;font-size:12px}.auto-label input{accent-color:var(--green);width:15px;height:15px;margin:0}.roots{display:flex;align-items:center;gap:6px;flex-wrap:wrap}.root-button{border:1px solid var(--line);border-radius:4px;background:#fff;font-size:11px;padding:3px 8px;color:var(--muted)}.root-button[aria-pressed=true]{background:#faeee7;border-color:#e6bfaa;color:#a45230}.manual-row{display:grid;grid-template-columns:40px 1fr 60px;gap:10px;align-items:center;font-family:var(--serif);color:var(--orange);font-size:14px}.manual-row input{width:100%;accent-color:var(--orange);margin:0}.manual-row output{text-align:right;font-variant-numeric:tabular-nums}.bridge{margin:28px 0 30px;padding:23px 25px;background:#ecf0e9;border-radius:10px;display:grid;grid-template-columns:145px 1fr;gap:24px}.bridge-intro strong{font-size:14px;font-weight:600;display:block}.bridge-intro span{font-size:11px;color:var(--muted)}.bridge-chain{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}.bridge-step{position:relative}.bridge-step:not(:last-child):after{content:"→";position:absolute;right:-16px;top:1px;color:#91a48f}.bridge-step strong{font-size:12px;font-weight:600;display:block}.bridge-step p{font-size:11px;color:var(--muted);margin:4px 0 0;line-height:1.7}.footer{display:flex;justify-content:space-between;gap:20px;color:var(--muted);font-size:11px;padding:0 0 25px}.hidden,[hidden]{display:none!important}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media(min-width:1450px){.plot-wrap{height:425px}.workspace{grid-template-columns:315px minmax(0,1fr)}}
+@media(max-width:1050px){.page{width:calc(100% - 40px)}.workspace{grid-template-columns:255px minmax(0,1fr);gap:16px}.theory{padding:20px 18px}.tab{padding:12px;gap:9px}.tab strong{font-size:13px}.hero-aside{display:none}.lab-head,.plot-topline{padding-left:18px;padding-right:18px}.plot-status{margin-left:18px;margin-right:18px}.metrics{margin-left:18px;margin-right:18px}.controls{padding-left:18px;padding-right:18px}.bridge{grid-template-columns:1fr;gap:16px}.plot-wrap{height:355px}.metric-value{font-size:23px}}
+@media(max-width:760px){.page{width:calc(100% - 28px)}.top-inner{height:56px}.top-note{font-size:10px}.hero{padding-top:25px;padding-bottom:22px}.hero p{font-size:12px}.tabs{gap:6px;margin-bottom:16px}.tab{padding:10px 8px;justify-content:center;gap:0}.tab-number,.tab small{display:none}.tab strong{font-size:12px}.workspace{grid-template-columns:1fr;gap:16px}.theory{padding:18px 20px;display:grid;grid-template-columns:1fr 1fr;gap:0 22px}.theory .intro-block{grid-column:1}.theory h2{font-size:20px}.intuition{font-size:12px;margin-bottom:12px}.formula{font-size:18px;margin-bottom:10px;padding:12px 8px}.conditions-block{grid-column:2;grid-row:1 / span 2}.theory details{grid-column:1 / -1;margin-top:10px;padding-top:10px}.guarantee{margin-top:10px;padding-top:10px}.condition{font-size:11px}.lab{grid-row:1}.plot-wrap{height:350px;margin:0 4px}.lab-head{gap:9px;padding:15px 15px 10px}.legend{gap:10px;font-size:10px}.plot-topline{padding-left:15px;padding-right:15px}.function-label{font-size:14px}.plot-badge{font-size:10px}.plot-status{margin-left:15px;margin-right:15px;font-size:11px}.metrics{margin-left:15px;margin-right:15px;gap:8px}.metric{padding-left:10px}.metric-value{font-size:24px}.metric-note{font-size:10px}.controls{padding:15px}.sample-control select{max-width:195px}.bridge{margin-top:20px;padding:18px}.bridge-chain{gap:18px}.bridge-step p{font-size:10px}.footer{font-size:10px}.top-note .optional{display:none}}
+@media(max-width:440px){.hero h1{font-size:26px}.brand{font-size:12px}.top-note{max-width:110px;text-align:right}.plot-wrap{height:320px}.plot-topline{gap:4px}.plot-badge{padding:2px 6px}.metrics{gap:7px}.metric-value{font-size:21px}.metric-label{font-size:10px}.theory{display:block}.conditions-block{margin-top:17px}.controls-top{align-items:flex-start}.tools{margin-left:auto}.sample-control select{max-width:190px}.sliders{gap:13px}.bridge-chain{grid-template-columns:1fr 1fr;gap:16px 24px}.bridge-step:nth-child(2):after{display:none}.footer{flex-direction:column;gap:5px}.legend{gap:8px}.legend .swatch{width:13px}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="top"><div class="page top-inner"><div class="brand"><span class="brand-mark" aria-hidden="true">ξ</span>微积分 · 几何实验室</div><div class="top-note">拖动一点，理解多一点<span class="optional"> / DIFFERENTIAL CALCULUS</span></div></div></header>
+<main class="page">
+<section class="hero"><div><p class="eyebrow">THE MEAN VALUE THEOREMS</p><h1>看见那条<em>「恰好平行」</em>的切线。</h1><p>把抽象的“存在一个 ξ”变成看得见的点。拖动端点，让平均变化率与瞬时变化率在图上相遇。</p></div><div class="hero-aside" aria-hidden="true">∃ ξ ∈ (a, b)</div></section>
+<nav class="tabs" role="tablist" aria-label="选择要探索的定理">
+<button class="tab" id="tab-fermat" role="tab" aria-controls="theorem-panel" aria-selected="false" data-mode="fermat"><span class="tab-number">01</span><span><strong>费马定理</strong><small>极值处的水平切线</small></span></button>
+<button class="tab" id="tab-rolle" role="tab" aria-controls="theorem-panel" aria-selected="false" data-mode="rolle"><span class="tab-number">02</span><span><strong>罗尔定理</strong><small>等高端点之间</small></span></button>
+<button class="tab" id="tab-lagrange" role="tab" aria-controls="theorem-panel" aria-selected="true" data-mode="lagrange"><span class="tab-number">03</span><span><strong>拉格朗日中值定理</strong><small>切线与割线平行</small></span></button>
+<button class="tab" id="tab-cauchy" role="tab" aria-controls="theorem-panel" aria-selected="false" data-mode="cauchy"><span class="tab-number">04</span><span><strong>柯西中值定理</strong><small>两种变化率的比</small></span></button>
+</nav>
+<section class="workspace" id="theorem-panel" role="tabpanel" aria-labelledby="tab-lagrange">
+<aside class="theory"><div class="intro-block"><div class="section-index" id="theory-index">03 / 从平均到瞬时</div><h2 id="theory-title">拉格朗日中值定理</h2><p class="intuition" id="intuition"></p><div class="formula" id="formula"></div></div><div class="conditions-block"><p class="conditions-title">先检查，定理的条件满足了吗？</p><div id="conditions"></div><p class="guarantee" id="guarantee"></p></div><details><summary>为什么会有这样的点？</summary><p id="proof"></p></details></aside>
+<div class="lab"><div class="lab-head"><div class="lab-heading"><span class="live-dot" aria-hidden="true"></span><h3 id="graph-title">拖动 A、B，寻找平行切线</h3></div><div class="legend" aria-label="图例"><span class="legend-item"><i class="swatch"></i><span id="curve-legend">函数曲线</span></span><span class="legend-item"><i class="swatch secant"></i><span id="secant-legend">割线 AB</span></span><span class="legend-item"><i class="swatch tangent"></i><span id="tangent-legend">ξ 处切线</span></span></div></div>
+<div class="plot-topline"><div id="function-label" class="function-label"></div><span class="plot-badge" id="plot-badge">两端点可自由拖动</span></div>
+<div class="plot-wrap" id="plot-wrap"><svg id="plot" class="plot" role="group" aria-label="可拖动的函数、割线与切线示意图"><title>中值定理的几何演示</title><desc id="plot-desc">蓝色点是区间端点，橙色点是切点。也可使用下方滑块操作。</desc></svg></div>
+<div class="plot-status" id="status"><span class="status-symbol" aria-hidden="true">↗</span><span id="status-text"></span></div>
+<div class="metrics"><div class="metric"><span class="metric-label" id="metric-label-1">割线斜率 · 平均变化率</span><span class="metric-value" id="metric-1"></span><span class="metric-note" id="metric-note-1"></span></div><div class="metric"><span class="metric-label" id="metric-label-2">切线斜率 · 瞬时变化率</span><span class="metric-value" id="metric-2"></span><span class="metric-note" id="metric-note-2"></span></div><div class="metric"><span class="metric-label" id="metric-label-3">切点的位置</span><span class="metric-value" id="metric-3"></span><span class="metric-note" id="metric-note-3"></span></div></div>
+<div class="controls"><div class="controls-top"><div class="sample-control"><label for="sample">换一条曲线</label><select id="sample"></select></div><div class="tools"><button class="small-button" id="counter" aria-pressed="false">看一个反例</button><button class="small-button" id="reset">重置</button></div></div>
+<div class="sliders"><div class="slider-field"><div class="slider-heading"><label id="a-label" for="a-slider">左端点 a</label><output id="a-value" for="a-slider"></output></div><input id="a-slider" type="range" min="-2.75" max="2.75" step="0.01" value="-1.4"></div><div class="slider-field"><div class="slider-heading"><label id="b-label" for="b-slider">右端点 b</label><output id="b-value" for="b-slider"></output></div><input id="b-slider" type="range" min="-2.75" max="2.75" step="0.01" value="1.9"></div></div>
+<p class="hint" id="drag-hint"></p><div class="xi-controls" id="xi-controls"><div class="xi-top"><label class="auto-label"><input type="checkbox" id="auto" checked>自动寻找切点 ξ</label><div class="roots" id="roots" aria-label="选择满足等式的切点"></div></div><div class="manual-row" id="manual-row" hidden><label for="xi-slider">ξ</label><input type="range" id="xi-slider" min="-1.39" max="1.89" step="0.001"><output id="xi-value" for="xi-slider"></output></div></div>
+</div></div>
+</section>
+<section class="bridge" aria-label="四个定理的关系"><div class="bridge-intro"><strong>一条逐步推广的线索</strong><span>从极值到两种变化率</span></div><div class="bridge-chain"><div class="bridge-step"><strong>费马 · 局部极值</strong><p>可导的内点极值，切线水平。<br>它是罗尔定理的基础。</p></div><div class="bridge-step"><strong>罗尔 · 等高端点</strong><p>连续、可导、两端等高，<br>中间必有水平切线。</p></div><div class="bridge-step"><strong>拉格朗日 · 任意端点</strong><p>“减去割线”化成罗尔情形，<br>切线于是与割线平行。</p></div><div class="bridge-step"><strong>柯西 · 参数曲线</strong><p>横坐标也换成函数 g(t)，<br>比较两种变化率的比。</p></div></div></section>
+<footer class="footer"><span>记住：定理保证“至少存在”，不保证只有一个；条件不满足时，结论仍可能成立。</span><span>离线可用 · 支持鼠标、触屏与键盘</span></footer>
+<div class="sr-only" id="announcement" aria-live="polite" aria-atomic="true"></div>
+</main>
+<script>
+(()=>{'use strict';
+const $=id=>document.getElementById(id), SVG='http://www.w3.org/2000/svg';
+const extent=2.75, gap=.24;
+const fmt=(n,d=3)=>Number.isFinite(n)?(Math.abs(n)<.5*10**(-d)?0:n).toFixed(d):'不定义';
+const clamp=(n,lo,hi)=>Math.max(lo,Math.min(hi,n));
+const samples={
+ fermat:[{name:'开口向上的抛物线',formula:'f(x) = 0.6(x − x₀)² + y₀',f:u=>.6*u*u,d:u=>1.2*u},{name:'开口向下的抛物线',formula:'f(x) = −0.6(x − x₀)² + y₀',f:u=>-.6*u*u,d:u=>-1.2*u},{name:'更平坦的四次函数',formula:'f(x) = 0.13(x − x₀)⁴ + y₀',f:u=>.13*u**4,d:u=>.52*u**3}],
+ rolle:[{name:'抛物线 · 一个切点',formula:'f(x) = 0.6x² + 0.25',f:x=>.6*x*x+.25,d:x=>1.2*x},{name:'双谷曲线 · 多个切点',formula:'f(x) = 0.14x⁴ − 0.65x² + 0.8',f:x=>.14*x**4-.65*x*x+.8,d:x=>.56*x**3-1.3*x},{name:'余弦曲线',formula:'f(x) = 1.4 cos(1.1x) + 0.4',f:x=>1.4*Math.cos(1.1*x)+.4,d:x=>-1.54*Math.sin(1.1*x)}],
+ lagrange:[{name:'三次函数 · 可有两个切点',formula:'f(x) = 0.22x³ − 0.7x + 1',f:x=>.22*x**3-.7*x+1,d:x=>.66*x*x-.7},{name:'二次函数 · 唯一切点',formula:'f(x) = 0.45x² − 0.4x + 0.3',f:x=>.45*x*x-.4*x+.3,d:x=>.9*x-.4},{name:'正弦与直线的叠加',formula:'f(x) = 1.2 sin x + 0.22x',f:x=>1.2*Math.sin(x)+.22*x,d:x=>1.2*Math.cos(x)+.22}],
+ cauchy:[{name:'横坐标也在非匀速变化',formula:'g(t) = t + 0.12t²，f(t) = 0.26t³ − 0.5t + 0.5',g:t=>t+.12*t*t,dg:t=>1+.24*t,f:t=>.26*t**3-.5*t+.5,d:t=>.78*t*t-.5},{name:'指数坐标 × 正弦曲线',formula:'g(t) = e^(0.35t)，f(t) = sin t + 0.18t²',g:t=>Math.exp(.35*t),dg:t=>.35*Math.exp(.35*t),f:t=>Math.sin(t)+.18*t*t,d:t=>Math.cos(t)+.36*t},{name:'取 g(t) = t，回到拉格朗日',formula:'g(t) = t，f(t) = 0.45t² + 0.2t',g:t=>t,dg:()=>1,f:t=>.45*t*t+.2*t,d:t=>.9*t+.2}]
+};
+const abs={name:'尖角：f(x) = |x|',formula:'f(x) = |x|',f:x=>Math.abs(x),d:x=>Math.abs(x)<1e-10?NaN:Math.sign(x)};
+const theory={
+ fermat:{index:'01 / 从局部极值出发',title:'费马定理',intro:'在一个光滑的山顶或谷底，切线会“躺平”。把探测点 Q 向极值点 P 靠近，看看割线怎样接近水平。',formula:'f′(x₀) = 0<small>x₀ 是内点极值点，且 f 在 x₀ 处可导</small>',guarantee:'<strong>极值 + 可导 ⇒ 导数为零。</strong><br>反过来不一定：例如 f(x) = x³ 在 0 处导数为零，却没有极值。',proof:'以极小值为例：足够靠近 x₀ 时，f(x₀+h)−f(x₀) ≥ 0。h > 0 时差商非负，h < 0 时差商非正。如果导数存在，左右极限必须相同，因此只能是 0。'},
+ rolle:{index:'02 / 等高端点之间',title:'罗尔定理',intro:'从同一高度出发，又回到同一高度。只要曲线连续、内部没有尖角，中间至少有一处切线水平。',formula:'f′(ξ) = 0<small>至少存在一个 ξ ∈ (a, b)</small>',guarantee:'<strong>两端等高 ⇒ 中间有水平切线。</strong><br>拖动时，两端点会等高联动；切点可能不止一个。',proof:'连续函数在闭区间上能取到最大值与最小值。若函数非常数，因为两端等高，至少一个极值在区间内部取得。再用费马定理，这个内点的导数就是 0。常数函数则每个内点都满足。'},
+ lagrange:{index:'03 / 从平均到瞬时',title:'拉格朗日中值定理',intro:'端点之间的割线，记录整段的平均变化率。沿着光滑曲线走，中间总能找到一个点：它的瞬时变化率恰好等于这个平均值。',formula:'f′(ξ) = <span class="frac"><span>f(b) − f(a)</span><span>b − a</span></span><small>至少存在一个 ξ ∈ (a, b)</small>',guarantee:'<strong>瞬时变化率 = 平均变化率。</strong><br>橙色切线与蓝色割线平行。两端等高时，就是罗尔定理。',proof:'令 k = [f(b)−f(a)]/(b−a)，构造 F(x) = f(x)−kx。减去割线的斜率后，F(a) = F(b)，于是由罗尔定理存在 F′(ξ) = 0，即 f′(ξ) = k。'},
+ cauchy:{index:'04 / 横坐标也是一个函数',title:'柯西中值定理',intro:'把横坐标换成 g(t)，纵坐标换成 f(t)。图上的切线斜率就是 f′(t)/g′(t)，它也会在某处等于两端点的割线斜率。',formula:'<span class="frac"><span>f′(ξ)</span><span>g′(ξ)</span></span> = <span class="frac"><span>f(b) − f(a)</span><span>g(b) − g(a)</span></span><small>比值式要求 g′(t) ≠ 0，t ∈ (a, b)</small>',guarantee:'<strong>两种变化率的比 = 两种总变化量的比。</strong><br>横轴是 g(t)，不是 t。拖动的是参数端点 a、b。',proof:'不含除法的通用形式是：f′(ξ)[g(b)−g(a)] = g′(ξ)[f(b)−f(a)]。对 H(t) = [g(b)−g(a)]f(t)−[f(b)−f(a)]g(t) 使用罗尔定理即可得到。当 g′ 在内部处处非零时，才可安全写成这里的比值式。'}
+};
+let state={mode:'lagrange',sample:0,counter:false,a:-1.4,b:1.9,h:0,k:.3,delta:1.15,auto:true,root:0,c:.8};
+let found=[],continuum=false,geom=null,drag=null,lastInfo=null,announceTimer;
+const plot=$('plot');
+function spec(){if(state.counter){if(state.mode==='cauchy')return{formula:'g(t) = t²，f(t) = t（参数曲线的水平坐标会折返）',g:t=>t*t,dg:t=>2*t,f:t=>t,d:()=>1};if(state.mode==='fermat')return{formula:'f(x) = |x − x₀| + y₀',f:u=>Math.abs(u),d:u=>Math.abs(u)<1e-10?NaN:Math.sign(u)};return abs;}return samples[state.mode][state.sample];}
+function f(t){let s=spec();return state.mode==='fermat'?s.f(t-state.h)+state.k:s.f(t);}
+function df(t){let s=spec();return s.d(state.mode==='fermat'?t-state.h:t);}
+function g(t){return state.mode==='cauchy'?spec().g(t):t;}
+function dg(t){return state.mode==='cauchy'?spec().dg(t):1;}
+function point(t){return{x:g(t),y:f(t)};}
+function solve(fn,a,b){
+ const roots=[],N=720,eps=Math.min(1e-6,(b-a)*1e-5),lo=a+eps,hi=b-eps;
+ let prevX=lo,prev=fn(lo),allZero=Number.isFinite(prev)&&Math.abs(prev)<1e-9;
+ const add=x=>{if(x>a+eps*.1&&x<b-eps*.1&&Number.isFinite(fn(x))&&Math.abs(fn(x))<1e-7&&!roots.some(r=>Math.abs(r-x)<1e-4))roots.push(x);};
+ for(let i=1;i<=N;i++){let x=lo+(hi-lo)*i/N,y=fn(x);if(!Number.isFinite(y)||Math.abs(y)>1e-9)allZero=false;if(Number.isFinite(y)&&Math.abs(y)<1e-10)add(x);if(Number.isFinite(prev)&&Number.isFinite(y)&&prev*y<0){let l=prevX,r=x,vl=prev;for(let j=0;j<48;j++){const m=(l+r)/2,v=fn(m);if(!Number.isFinite(v)){l=r=NaN;break;}if(vl*v<=0)r=m;else{l=m;vl=v;}}if(Number.isFinite(l))add((l+r)/2);}prevX=x;prev=y;}
+ return allZero?{roots:[(a+b)/2],continuum:true}:{roots:roots.sort((x,y)=>x-y),continuum:false};
+}
+function compute(){
+ const mode=state.mode;
+ if(mode==='fermat')return{valid:!state.counter,c:state.h,secant:(f(state.h+state.delta)-f(state.h))/state.delta,tangent:df(state.h),residual:0,dx:1,dy:0,ratioOK:!state.counter};
+ const dx=g(state.b)-g(state.a),dy=f(state.b)-f(state.a);
+ const residual=t=>df(t)*dx-dg(t)*dy;
+ let result=solve(residual,state.a,state.b);found=result.roots;continuum=result.continuum;state.root=clamp(state.root,0,Math.max(0,found.length-1));
+ if(state.auto&&found.length)state.c=found[state.root];else state.c=clamp(state.c,state.a+.001,state.b-.001);
+ const crosses=state.a<0&&state.b>0;
+ const valid=mode==='cauchy'?true:!(state.counter&&crosses);
+ const ratioOK=mode==='cauchy'?!(state.counter&&state.a<0&&state.b>0):true;
+ const c=state.auto&&!found.length?null:state.c;
+ const tangent=c===null?NaN:(Math.abs(dg(c))<1e-9?NaN:df(c)/dg(c));
+ return{valid,ratioOK,c,dx,dy,secant:Math.abs(dx)<1e-9?NaN:dy/dx,tangent,residual:c===null?NaN:residual(c),parallel:c!==null&&Number.isFinite(residual(c))&&Math.abs(residual(c))<1e-6};
+}
+function node(tag,attrs={},text){const n=document.createElementNS(SVG,tag);for(const[k,v]of Object.entries(attrs))if(v!==undefined)n.setAttribute(k,v);if(text!==undefined)n.textContent=text;return n;}
+function niceStep(span,target=7){const raw=span/target,p=10**Math.floor(Math.log10(raw)),r=raw/p;return(r<1.5?1:r<3?2:r<7?5:10)*p;}
+function ticks(lo,hi,n){const step=niceStep(hi-lo,n),out=[];for(let v=Math.ceil(lo/step)*step;v<=hi+step*.001;v+=step)out.push(Math.abs(v)<step*.00001?0:v);return out;}
+function tickLabel(v,step){return fmt(v,Math.max(0,-Math.floor(Math.log10(step))));}
+function draw(info){
+ const width=Math.max(280,$('plot-wrap').clientWidth),height=$('plot-wrap').clientHeight;
+ const narrow=width<450,pad={l:narrow?42:53,r:narrow?22:31,t:28,b:37};
+ const w=width-pad.l-pad.r,h=height-pad.t-pad.b;
+ let xmin=-3,xmax=3,ymin=Infinity,ymax=-Infinity;
+ if(state.mode==='fermat'){ymin=-3;ymax=4.8;}else{
+  for(let i=0;i<=240;i++){const t=-2.95+5.9*i/240,y=f(t);ymin=Math.min(ymin,y);ymax=Math.max(ymax,y);}
+  let span=Math.max(1,ymax-ymin);ymin-=span*.13;ymax+=span*.16;
+ }
+ if(state.mode==='cauchy'){xmin=Infinity;xmax=-Infinity;for(let i=0;i<=240;i++){const v=g(-2.95+5.9*i/240);xmin=Math.min(xmin,v);xmax=Math.max(xmax,v);}let span=xmax-xmin;xmin-=span*.08;xmax+=span*.1;}
+ const sx=x=>pad.l+(x-xmin)/(xmax-xmin)*w,sy=y=>pad.t+h-(y-ymin)/(ymax-ymin)*h;
+ geom={width,height,pad,w,h,xmin,xmax,ymin,ymax,sx,sy,ix:x=>xmin+(x-pad.l)/w*(xmax-xmin),iy:y=>ymin+(pad.t+h-y)/h*(ymax-ymin)};
+ plot.setAttribute('viewBox',`0 0 ${width} ${height}`);
+ const frag=document.createDocumentFragment();
+ const title=node('title',{},state.mode==='cauchy'?'柯西定理：参数曲线 (g(t), f(t))':'函数、割线与切线的交互图');frag.append(title);
+ frag.append(node('desc',{},state.mode==='fermat'?'拖动极值点 P 平移曲线，拖动 Q 改变差商。':`拖动蓝色端点 A、B。${info.c===null?'当前没有满足条件的切点。':`当前切点参数 ξ 为 ${fmt(info.c)}。`}下方有可用键盘操作的同等滑块。`));
+ const defs=node('defs'),clip=node('clipPath',{id:'plot-clip'});clip.append(node('rect',{x:pad.l,y:pad.t,width:w,height:h}));defs.append(clip);frag.append(defs);
+ const grid=node('g');
+ for(const x of ticks(xmin,xmax,narrow?5:8)){grid.append(node('line',{x1:sx(x),x2:sx(x),y1:pad.t,y2:pad.t+h,class:'grid'}));grid.append(node('text',{x:sx(x),y:pad.t+h+21,'text-anchor':'middle'},tickLabel(x,niceStep(xmax-xmin,narrow?5:8))));}
+ for(const y of ticks(ymin,ymax,5)){grid.append(node('line',{x1:pad.l,x2:pad.l+w,y1:sy(y),y2:sy(y),class:'grid'}));grid.append(node('text',{x:pad.l-10,y:sy(y)+4,'text-anchor':'end'},tickLabel(y,niceStep(ymax-ymin,5))));}
+ const axisY=sy(clamp(0,ymin,ymax)),axisX=sx(clamp(0,xmin,xmax));
+ grid.append(node('line',{x1:pad.l,x2:pad.l+w,y1:axisY,y2:axisY,class:'axis'}));grid.append(node('line',{x1:axisX,x2:axisX,y1:pad.t,y2:pad.t+h,class:'axis'}));
+ grid.append(node('text',{x:pad.l+w+7,y:axisY-8,'text-anchor':'end',class:'axis-label'},state.mode==='cauchy'?'g(t)':'x'));
+ grid.append(node('text',{x:pad.l+5,y:16,class:'axis-label'},state.mode==='cauchy'?'f(t)':'f(x)'));frag.append(grid);
+ const lines=node('g',{'clip-path':'url(#plot-clip)'});
+ function path(t0,t1,cls){let d='';const N=360;for(let i=0;i<=N;i++){let t=t0+(t1-t0)*i/N,p=point(t);d+=(i?'L':'M')+sx(p.x).toFixed(2)+' '+sy(p.y).toFixed(2);}return node('path',{d,class:cls});}
+ if(state.mode!=='fermat'){lines.append(node('rect',{x:sx(Math.min(g(state.a),g(state.b))),y:pad.t,width:Math.abs(sx(g(state.b))-sx(g(state.a))),height:h,fill:'#edf4ed',opacity:'.5'}));}
+ lines.append(path(-2.99,2.99,'curve curve-context'));
+ lines.append(path(state.mode==='fermat'?-2.99:state.a,state.mode==='fermat'?2.99:state.b,'curve active-interval'));
+ function infiniteLine(p,dx,dy,cls){const norm=Math.hypot(dx,dy);if(!Number.isFinite(norm)||norm<1e-12)return;const len=80;dx=dx/norm*len;dy=dy/norm*len;lines.append(node('line',{x1:sx(p.x-dx),y1:sy(p.y-dy),x2:sx(p.x+dx),y2:sy(p.y+dy),class:cls}));}
+ let c=info.c;
+ if(state.mode==='fermat'){
+  const p=point(state.h),q=point(state.h+state.delta);infiniteLine(p,1,info.secant,'secant-line');if(!state.counter)infiniteLine(p,1,0,'tangent-line');
+ }else{
+  infiniteLine(point(state.a),info.dx,info.dy,'secant-line');
+  if(c!==null&&Number.isFinite(df(c)))infiniteLine(point(c),dg(c),df(c),'tangent-line');
+ }
+ frag.append(lines);
+ const labels=node('g');
+ function dragPoint(t,key,label,orange=false){const p=point(t),x=sx(p.x),y=sy(p.y);if(x<pad.l-2||x>pad.l+w+2||y<pad.t-2||y>pad.t+h+2)return;const group=node('g',{class:'dragger','data-drag':key});group.append(node('circle',{cx:x,cy:y,r:22,class:'halo'}));group.append(node('circle',{cx:x,cy:y,r:orange?6:6.5,class:'point'+(orange?' xi-point':'')}));let labelY=y<pad.t+35?y+24:y-15;let labelX=clamp(x,pad.l+14,pad.l+w-14);if(key==='a')labelX=clamp(x-12,pad.l+12,pad.l+w-12);if(key==='b')labelX=clamp(x+12,pad.l+12,pad.l+w-12);if(key==='c'&&((Math.abs(x-sx(g(state.a)))<30)||(Math.abs(x-sx(g(state.b)))<30)))labelY=y+24;group.append(node('text',{x:labelX,y:labelY,'text-anchor':'middle',class:'point-label'+(orange?' xi-label':'')},label));labels.append(group);}
+ if(state.mode==='fermat'){dragPoint(state.h+state.delta,'q','Q');dragPoint(state.h,'p','P',true);}else{
+  for(const key of['a','b']){const p=point(state[key]);lines.append(node('line',{x1:sx(p.x),x2:sx(p.x),y1:sy(p.y),y2:pad.t+h,class:'projection'}));}
+  if(state.auto)found.forEach((root,i)=>{if(i===state.root)return;const p=point(root);labels.append(node('circle',{cx:sx(p.x),cy:sy(p.y),r:4,class:'ghost-dot'}));});
+  dragPoint(state.a,'a','A');dragPoint(state.b,'b','B');if(c!==null)dragPoint(c,'c','ξ',true);
+ }
+ frag.append(labels);plot.replaceChildren(frag);
+}
+function condition(text,ok=true){return`<div class="condition${ok?'':' fail'}"><span class="condition-icon" aria-hidden="true">${ok?'✓':'!'}</span><span>${text}</span></div>`;}
+function updateInfo(info){
+ const mode=state.mode,s=spec();$('function-label').textContent=s.formula;
+ let conditions,status,warning=false;
+ if(mode==='fermat'){
+  conditions=condition('x₀ 是定义域内点的局部极值点')+condition('f 在 x₀ 处可导',!state.counter);
+  status=state.counter?'P 是极小值点，但左右导数分别为 −1、1，导数不存在，因此没有水平切线。':'P 是可导的极值点，橙色切线始终水平。让 Q 靠近 P，蓝色割线也会趋于水平。';warning=state.counter;
+  $('metric-label-1').textContent='PQ 的割线斜率 · 差商';$('metric-1').textContent=fmt(info.secant);$('metric-note-1').textContent=`δ = ${fmt(state.delta,2)}，Q 在 P ${state.delta>0?'右侧':'左侧'}`;
+  $('metric-label-2').textContent='P 处导数 · 切线斜率';$('metric-2').textContent=state.counter?'不存在':'0.000';$('metric-note-2').textContent=state.counter?'尖角处不能把水平线当切线':'随着 δ → 0，差商 → 0';
+  $('metric-label-3').textContent='极值点 P 的位置';$('metric-3').textContent=fmt(state.h);$('metric-note-3').textContent=`x₀；当前高度 y₀ = ${fmt(state.k,2)}`;
+ }else{
+  conditions=condition('f 在闭区间 [a, b] 连续')+condition('f 在开区间 (a, b) 可导',info.valid);
+  if(mode==='rolle')conditions+=condition('两个端点等高：f(a) = f(b)');
+  if(mode==='cauchy')conditions=condition('f、g 在 [a, b] 上连续')+condition('f、g 在 (a, b) 内可导')+condition('比值式：g′ 在 (a, b) 内处处非零',info.ratioOK);
+  if(!info.valid){status='区间跨过尖角 x = 0，内部不可导。这里没有与割线平行的切线；连续这一条条件还不够。';warning=true;}
+  else if(!info.ratioOK){status=Math.abs(info.dx)<1e-9?(info.parallel?'Δg = 0：割线与 ξ 处切线都竖直，斜率比无定义；不含除法的柯西等式仍然成立。':'Δg = 0，割线竖直，比值式无定义。将 ξ 移到 g′(ξ) = 0 处，可满足不含除法的柯西等式。'):(info.parallel?'g′(0) = 0：比值式的条件不满足；不含除法的柯西等式仍有对应切点。':'g′(0) = 0：比值式的条件不满足。通用形式仍保证存在切点，当前 ξ 尚未满足等式。');warning=true;}
+  else if(!state.auto){status=info.parallel?'找到了！你选的 ξ 处切线与割线平行。':'手动探索中：拖动橙色 ξ 或滑块，让切线与蓝色割线平行。';}
+  else if(continuum)status='这一段恰好是直线，任意内部点的切线都与割线平行。图中显示一个代表点。';
+  else if(found.length>1)status=`找到了 ${found.length} 个切点。定理保证“至少一个”，切点可以不唯一；点击下方 ξ 按钮切换。`;
+  else status=mode==='rolle'?'两端点保持等高，因此割线水平；中间的 ξ 处也有水平切线。':'已找到对应切点 ξ。继续拖动端点，橙色切线会自动保持与蓝色割线平行。';
+  $('metric-label-1').textContent=mode==='cauchy'?'割线斜率 · Δf / Δg':'割线斜率 · 平均变化率';$('metric-1').textContent=Number.isFinite(info.secant)?fmt(info.secant):'竖直';$('metric-note-1').textContent=mode==='cauchy'?`Δg = ${fmt(info.dx)}，Δf = ${fmt(info.dy)}`:`[f(b) − f(a)] / (b − a)`;
+  $('metric-label-2').textContent=mode==='cauchy'?'切线斜率 · f′(ξ) / g′(ξ)':'切线斜率 · 瞬时变化率';$('metric-2').textContent=info.c===null?'无对应点':Number.isFinite(info.tangent)?fmt(info.tangent):Number.isFinite(df(info.c))&&Math.abs(dg(info.c))<1e-9?'竖直':'不存在';
+  $('metric-note-2').textContent=info.c===null?'此例中定理条件不满足':mode==='cauchy'?`f′(ξ) = ${fmt(df(info.c))}，g′(ξ) = ${fmt(dg(info.c))}`:Number.isFinite(info.tangent)?`与割线斜率之差：${fmt(info.tangent-info.secant,5)}`:'此点不可导';
+  $('metric-label-3').textContent=mode==='cauchy'?'切点的参数 ξ':'切点的位置 ξ';$('metric-3').textContent=info.c===null?'—':fmt(info.c);$('metric-note-3').textContent=info.c===null?'不保证存在，不代表总不存在':continuum?'任意 ξ ∈ (a, b) 均满足':`严格位于 (${fmt(state.a,2)}, ${fmt(state.b,2)}) 内`;
+ }
+ $('conditions').innerHTML=conditions;$('status-text').textContent=status;$('status').classList.toggle('warning',warning);
+ $('a-value').textContent=fmt(mode==='fermat'?state.h:state.a,2);$('b-value').textContent=fmt(mode==='fermat'?state.delta:state.b,2);
+ $('a-slider').value=mode==='fermat'?state.h:state.a;$('b-slider').value=mode==='fermat'?state.delta:state.b;
+ if(mode!=='fermat'){
+  $('a-slider').max=Math.min(mode==='rolle'?-.35:extent,state.b-gap);$('b-slider').min=Math.max(mode==='rolle'?.35:-extent,state.a+gap);
+  $('auto').checked=state.auto;$('manual-row').hidden=state.auto;$('xi-slider').min=state.a+.001;$('xi-slider').max=state.b-.001;$('xi-slider').value=state.c;$('xi-value').textContent=fmt(state.c);
+  const key=state.auto+'|'+found.map(x=>fmt(x)).join(',')+'|'+state.root+'|'+continuum;
+  if($('roots').dataset.key!==key){$('roots').dataset.key=key;$('roots').replaceChildren();if(state.auto&&found.length>1&&!continuum)found.forEach((x,i)=>{const btn=document.createElement('button');btn.className='root-button';btn.type='button';btn.textContent=`ξ${i+1} = ${fmt(x)}`;btn.setAttribute('aria-pressed',i===state.root?'true':'false');btn.addEventListener('click',()=>{state.root=i;render();});$('roots').append(btn);});}
+ }
+ $('plot-badge').textContent=mode==='fermat'?'P 可平移 · Q 可沿曲线拖动':mode==='rolle'?'等高联动 · f(a) = f(b)':mode==='cauchy'?'横轴 g(t) · 纵轴 f(t)':'两端点可自由拖动';
+ clearTimeout(announceTimer);announceTimer=setTimeout(()=>{$('announcement').textContent=status+(info.c!==null?` 当前 ξ = ${fmt(info.c)}。`:'');},350);
+}
+function render(){const info=compute();lastInfo=info;draw(info);updateInfo(info);}
+function setMode(mode){state.mode=mode;state.sample=0;state.counter=false;resetValues();configure();render();}
+function resetValues(){state.a=state.mode==='rolle'?-2.25:-1.4;state.b=state.mode==='rolle'?2.25:1.9;if(state.counter&&state.mode==='cauchy'){state.a=-1.7;state.b=1.7;}state.h=0;state.k=.3;state.delta=1.15;state.auto=true;state.root=0;state.c=.5;}
+function configure(){
+ const m=state.mode,t=theory[m];document.querySelectorAll('[data-mode]').forEach(btn=>btn.setAttribute('aria-selected',btn.dataset.mode===m?'true':'false'));$('theorem-panel').setAttribute('aria-labelledby','tab-'+m);
+ $('theory-index').textContent=t.index;$('theory-title').textContent=t.title;$('intuition').textContent=t.intro;$('formula').innerHTML=t.formula;$('guarantee').innerHTML=t.guarantee;$('proof').textContent=t.proof;
+ $('graph-title').textContent=m==='fermat'?'移动 P、Q，看割线趋于水平':m==='rolle'?'拖动端点，保持两端等高':m==='cauchy'?'在参数曲线上寻找平行切线':'拖动 A、B，寻找平行切线';
+ $('curve-legend').textContent=m==='cauchy'?'参数曲线':'函数曲线';$('secant-legend').textContent=m==='fermat'?'割线 PQ':'割线 AB';$('tangent-legend').textContent=m==='fermat'?'P 处切线':'ξ 处切线';
+ $('counter').textContent=state.counter?'回到光滑曲线':m==='cauchy'?'让分母等于 0':'看一个反例';$('counter').setAttribute('aria-pressed',String(state.counter));
+ $('sample').replaceChildren(...samples[m].map((s,i)=>{const opt=document.createElement('option');opt.value=i;opt.textContent=s.name;return opt;}));$('sample').value=state.sample;$('sample').disabled=state.counter;
+ $('xi-controls').hidden=m==='fermat';$('a-label').textContent=m==='fermat'?'极值点横坐标 x₀':m==='cauchy'?'起点参数 a':'左端点 a';$('b-label').textContent=m==='fermat'?'探测距离 δ（Q − P）':m==='cauchy'?'终点参数 b':'右端点 b';
+ $('a-slider').min=m==='fermat'?-1.25:-extent;$('a-slider').max=m==='fermat'?1.25:extent;$('b-slider').min=m==='fermat'?-1.6:-extent;$('b-slider').max=m==='fermat'?1.6:extent;
+ $('drag-hint').textContent=m==='fermat'?'拖橙色 P 可左右、上下平移曲线；拖蓝色 Q 改变探测距离。δ 越接近 0，越能看清导数。':m==='rolle'?'为保持罗尔条件，拖动 A 时 B 会镜像联动。关闭自动寻找后，可自己拖动橙色 ξ。':m==='cauchy'?'滑块移动的是参数 t；沿曲线拖动 A、B 也可调整。橙色点对应同一个参数 ξ。':'蓝色 A、B 沿曲线移动；关闭自动寻找后，可拖动橙色 ξ 自己寻找平行的位置。';
+}
+function setEndpoint(key,v){if(state.mode==='rolle'){const r=clamp(Math.abs(v),.35,extent);state.a=-r;state.b=r;}else if(key==='a')state.a=clamp(v,-extent,state.b-gap);else state.b=clamp(v,state.a+gap,extent);}
+function setDelta(v){state.delta=clamp(v,-1.6,1.6);if(Math.abs(state.delta)<.015)state.delta=state.delta<0?-.02:.02;}
+function toLocal(e){const box=plot.getBoundingClientRect();return{x:(e.clientX-box.left)/box.width*geom.width,y:(e.clientY-box.top)/box.height*geom.height};}
+function nearestParameter(p){let best=-extent,dist=Infinity;for(let i=0;i<=600;i++){const t=-extent+2*extent*i/600,q=point(t),d=(geom.sx(q.x)-p.x)**2+(geom.sy(q.y)-p.y)**2;if(d<dist){dist=d;best=t;}}let l=Math.max(-extent,best-.02),r=Math.min(extent,best+.02);for(let i=0;i<24;i++){let t1=l+(r-l)/3,t2=r-(r-l)/3,q1=point(t1),q2=point(t2),d1=(geom.sx(q1.x)-p.x)**2+(geom.sy(q1.y)-p.y)**2,d2=(geom.sx(q2.x)-p.x)**2+(geom.sy(q2.y)-p.y)**2;if(d1<d2)r=t2;else l=t1;}return(l+r)/2;}
+plot.addEventListener('pointerdown',e=>{const handle=e.target.closest('[data-drag]');if(!handle||!geom)return;e.preventDefault();drag={key:handle.dataset.drag,id:e.pointerId};if(drag.key==='c'&&state.auto){state.auto=false;}$('plot').setPointerCapture(e.pointerId);});
+plot.addEventListener('pointermove',e=>{if(!drag||drag.id!==e.pointerId)return;e.preventDefault();const p=toLocal(e),x=geom.ix(p.x);if(drag.key==='p'){state.h=clamp(x,-1.25,1.25);state.k=clamp(geom.iy(p.y),-1.5,2.3);}else if(drag.key==='q'){setDelta(x-state.h);}else{const t=state.mode==='cauchy'?nearestParameter(p):x;if(drag.key==='c')state.c=clamp(t,state.a+.001,state.b-.001);else setEndpoint(drag.key,t);}render();});
+function endDrag(){drag=null;}
+plot.addEventListener('pointerup',endDrag);plot.addEventListener('pointercancel',endDrag);plot.addEventListener('lostpointercapture',endDrag);
+document.querySelectorAll('[data-mode]').forEach(btn=>{btn.addEventListener('click',()=>setMode(btn.dataset.mode));btn.addEventListener('keydown',e=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;e.preventDefault();const tabs=[...document.querySelectorAll('[data-mode]')],i=tabs.indexOf(btn),j=e.key==='Home'?0:e.key==='End'?3:(i+(e.key==='ArrowRight'?1:3))%4;setMode(tabs[j].dataset.mode);tabs[j].focus();});});
+$('sample').addEventListener('change',e=>{state.sample=Number(e.target.value);state.root=0;render();});
+$('counter').addEventListener('click',()=>{state.counter=!state.counter;resetValues();configure();render();});
+$('reset').addEventListener('click',()=>{resetValues();configure();render();});
+$('a-slider').addEventListener('input',e=>{if(state.mode==='fermat')state.h=Number(e.target.value);else setEndpoint('a',Number(e.target.value));render();});
+$('b-slider').addEventListener('input',e=>{if(state.mode==='fermat')setDelta(Number(e.target.value));else setEndpoint('b',Number(e.target.value));render();});
+$('auto').addEventListener('change',e=>{state.auto=e.target.checked;render();});
+$('xi-slider').addEventListener('input',e=>{state.c=Number(e.target.value);render();});
+new ResizeObserver(()=>{if(lastInfo)draw(lastInfo);}).observe($('plot-wrap'));
+configure();render();
+})();
+</script>
+</body>
+</html>

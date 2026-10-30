@@ -1,0 +1,7 @@
+# Generated output and temporary folders
+output/
+ouput/
+tmp/
+
+# Microsoft Office lock files
+~$*

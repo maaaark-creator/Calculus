@@ -1,0 +1,1030 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f7f8">
+  <title>函数的间断点分类</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f5f7f8;
+      --paper: #ffffff;
+      --ink: #20262b;
+      --muted: #65717a;
+      --line: #d9e0e4;
+      --line-strong: #bdc8ce;
+      --green: #167d67;
+      --green-soft: #e8f5f1;
+      --blue: #3f67c6;
+      --blue-soft: #edf2ff;
+      --orange: #c06c11;
+      --orange-soft: #fff3e3;
+      --rose: #aa4668;
+      --rose-soft: #fbeef3;
+      --shadow: 0 10px 28px rgba(28, 38, 44, .07);
+      --radius: 8px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Inter, "Noto Sans SC", "Microsoft YaHei", sans-serif;
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    button { font: inherit; }
+
+    button:focus-visible,
+    a:focus-visible {
+      outline: 3px solid rgba(63, 103, 198, .28);
+      outline-offset: 2px;
+    }
+
+    .topbar {
+      height: 62px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 255, 255, .96);
+    }
+
+    .topbar-inner,
+    main,
+    footer {
+      width: min(1120px, calc(100% - 48px));
+      margin: 0 auto;
+    }
+
+    .topbar-inner {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+    }
+
+    .brand-mark {
+      display: grid;
+      width: 32px;
+      height: 32px;
+      place-items: center;
+      border-radius: 7px;
+      background: var(--ink);
+      color: #fff;
+      font-family: Cambria, Georgia, serif;
+      font-size: 18px;
+    }
+
+    .brand-sub,
+    .topbar-note { color: var(--muted); }
+
+    .brand-sub {
+      margin-left: 4px;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .topbar-note { font-size: 12px; }
+
+    main { padding: 38px 0 54px; }
+
+    .intro {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(320px, .78fr);
+      gap: 42px;
+      align-items: end;
+      margin-bottom: 28px;
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--blue);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    h1,
+    h2,
+    h3,
+    p { margin-top: 0; }
+
+    h1 {
+      margin-bottom: 10px;
+      font-size: 36px;
+      line-height: 1.25;
+      font-weight: 750;
+      letter-spacing: 0;
+    }
+
+    .intro-copy {
+      max-width: 650px;
+      margin-bottom: 0;
+      color: var(--muted);
+    }
+
+    .limit-pair {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--paper);
+    }
+
+    .limit-pair > div { padding: 15px 16px; }
+    .limit-pair > div + div { border-left: 1px solid var(--line); }
+
+    .small-label {
+      display: block;
+      margin-bottom: 3px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .math {
+      font-family: "Cambria Math", Cambria, Georgia, serif;
+      font-size: 17px;
+      white-space: nowrap;
+    }
+
+    .classification-map {
+      overflow: hidden;
+      margin-bottom: 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    .map-question {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      min-height: 68px;
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--line);
+      background: #fbfcfd;
+    }
+
+    .map-question strong { font-size: 16px; }
+
+    .question-formula {
+      color: var(--muted);
+      font-family: "Cambria Math", Cambria, Georgia, serif;
+      text-align: right;
+    }
+
+    .map-branches {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .branch {
+      min-width: 0;
+      padding: 20px;
+    }
+
+    .branch + .branch { border-left: 1px solid var(--line); }
+
+    .branch-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .branch-head h2 {
+      margin-bottom: 0;
+      font-size: 19px;
+      font-weight: 750;
+    }
+
+    .branch-head span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .branch.first .branch-head h2 { color: var(--blue); }
+    .branch.second .branch-head h2 { color: var(--orange); }
+
+    .branch-rule {
+      margin-bottom: 13px;
+      padding: 10px 12px;
+      border-left: 3px solid var(--line-strong);
+      color: #49545b;
+      background: #f8fafb;
+    }
+
+    .type-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .type-cell {
+      min-height: 88px;
+      padding: 12px 13px;
+      border-radius: 6px;
+    }
+
+    .type-cell strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 15px;
+    }
+
+    .type-cell span {
+      display: block;
+      color: #536069;
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .type-cell.removable { background: var(--green-soft); }
+    .type-cell.jump { background: var(--blue-soft); }
+    .type-cell.infinite { background: var(--orange-soft); }
+    .type-cell.oscillatory { background: var(--rose-soft); }
+
+    .continuity-note {
+      margin: 13px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 14px;
+    }
+
+    .section-heading h2 {
+      margin-bottom: 0;
+      font-size: 22px;
+      font-weight: 750;
+    }
+
+    .section-heading p {
+      margin-bottom: 1px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .type-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .type-tab {
+      min-height: 40px;
+      padding: 8px 14px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--paper);
+      color: var(--ink);
+      cursor: pointer;
+    }
+
+    .type-tab:hover { border-color: var(--line-strong); }
+
+    .type-tab[aria-selected="true"] {
+      border-color: var(--active-color);
+      background: var(--active-soft);
+      color: var(--active-color);
+      font-weight: 700;
+    }
+
+    .type-tab[data-type="removable"] { --active-color: var(--green); --active-soft: var(--green-soft); }
+    .type-tab[data-type="jump"] { --active-color: var(--blue); --active-soft: var(--blue-soft); }
+    .type-tab[data-type="infinite"] { --active-color: var(--orange); --active-soft: var(--orange-soft); }
+    .type-tab[data-type="oscillatory"] { --active-color: var(--rose); --active-soft: var(--rose-soft); }
+
+    .lab {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(310px, .85fr);
+      overflow: hidden;
+      margin-bottom: 30px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    .plot-column {
+      min-width: 0;
+      padding: 20px 20px 18px;
+    }
+
+    .detail-column {
+      padding: 22px 22px 20px;
+      border-left: 1px solid var(--line);
+      background: #fbfcfd;
+    }
+
+    .plot-head {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 12px;
+    }
+
+    .plot-head h3,
+    .detail-column h3 {
+      margin-bottom: 4px;
+      font-size: 19px;
+      font-weight: 750;
+    }
+
+    .family-label {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .formula-chip {
+      max-width: 55%;
+      color: #3d474e;
+      font-family: "Cambria Math", Cambria, Georgia, serif;
+      font-size: 15px;
+      text-align: right;
+    }
+
+    .plot-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      min-height: 270px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+    }
+
+    #function-plot {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .plot-caption {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-top: 11px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .legend-line,
+    .legend-guide {
+      display: inline-block;
+      width: 20px;
+      height: 2px;
+    }
+
+    .legend-line { background: var(--type-color); }
+    .legend-guide { border-top: 2px dashed var(--line-strong); }
+
+    .detail-column h3 { color: var(--type-color); }
+
+    .definition {
+      margin-bottom: 17px;
+      color: #49545b;
+    }
+
+    .limit-list {
+      margin: 0 0 17px;
+      border-top: 1px solid var(--line);
+    }
+
+    .limit-row {
+      display: grid;
+      grid-template-columns: minmax(110px, 1fr) auto;
+      gap: 12px;
+      align-items: center;
+      min-height: 47px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .limit-name { color: var(--muted); }
+    .limit-value {
+      font-family: "Cambria Math", Cambria, Georgia, serif;
+      font-size: 17px;
+      font-weight: 700;
+    }
+
+    .diagnosis {
+      margin-bottom: 17px;
+      padding: 11px 13px;
+      border-left: 3px solid var(--type-color);
+      background: var(--type-soft);
+    }
+
+    .diagnosis strong {
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    .diagnosis span { color: #4c5860; }
+
+    .path {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .path b { color: var(--ink); }
+
+    .reference {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--paper);
+    }
+
+    .reference h2 {
+      margin: 0;
+      padding: 17px 20px 12px;
+      font-size: 20px;
+      font-weight: 750;
+    }
+
+    .table-wrap { overflow-x: auto; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      padding: 12px 16px;
+      border-top: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      color: var(--muted);
+      background: #fafbfc;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    td:first-child {
+      min-width: 115px;
+      font-weight: 700;
+    }
+
+    .table-type {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .type-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .table-type.removable { color: var(--green); }
+    .table-type.jump { color: var(--blue); }
+    .table-type.infinite { color: var(--orange); }
+    .table-type.oscillatory { color: var(--rose); }
+
+    footer {
+      padding: 0 0 32px;
+      color: var(--muted);
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .chart-grid { stroke: #e9edf0; stroke-width: 1; }
+    .chart-axis { stroke: #8f9aa1; stroke-width: 1.2; }
+    .chart-guide { stroke: #9aa5ac; stroke-width: 1.2; stroke-dasharray: 6 5; }
+    .chart-curve { fill: none; stroke: var(--type-color); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+    .chart-limit { fill: #fff; stroke: var(--type-color); stroke-width: 3; }
+    .chart-value { fill: var(--type-color); stroke: #fff; stroke-width: 2; }
+    .chart-text { fill: #69757d; font-family: Inter, "Microsoft YaHei", sans-serif; font-size: 12px; }
+    .chart-label { fill: var(--ink); font-family: "Cambria Math", Cambria, Georgia, serif; font-size: 13px; }
+    .chart-zone { fill: var(--type-soft); opacity: .7; }
+
+    @media (max-width: 820px) {
+      .intro,
+      .lab { grid-template-columns: 1fr; }
+
+      .detail-column {
+        border-top: 1px solid var(--line);
+        border-left: 0;
+      }
+
+      .intro { gap: 20px; }
+    }
+
+    @media (max-width: 680px) {
+      .topbar-inner,
+      main,
+      footer { width: min(100% - 28px, 1120px); }
+
+      .topbar-note,
+      .brand-sub { display: none; }
+
+      main { padding-top: 28px; }
+      h1 { font-size: 29px; }
+
+      .map-question,
+      .section-heading,
+      .plot-head,
+      .plot-caption {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .question-formula,
+      .formula-chip {
+        max-width: 100%;
+        text-align: left;
+      }
+
+      .map-branches { grid-template-columns: 1fr; }
+      .branch + .branch { border-top: 1px solid var(--line); border-left: 0; }
+      .type-row { grid-template-columns: 1fr; }
+      .plot-wrap { min-height: 230px; }
+
+      .type-tabs {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .type-tab { width: 100%; }
+      .plot-column,
+      .detail-column { padding: 16px; }
+    }
+
+    @media (max-width: 390px) {
+      .limit-pair { grid-template-columns: 1fr; }
+      .limit-pair > div + div { border-top: 1px solid var(--line); border-left: 0; }
+      .type-tabs { grid-template-columns: 1fr; }
+      .limit-row { grid-template-columns: 1fr; gap: 0; padding: 8px 0; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <span class="brand-mark">f</span>
+        <span>高等数学</span>
+        <span class="brand-sub">极限与连续</span>
+      </div>
+      <div class="topbar-note">先判左右极限，再判间断类型</div>
+    </div>
+  </header>
+
+  <main>
+    <section class="intro" aria-labelledby="page-title">
+      <div>
+        <p class="eyebrow">间断点分类框架</p>
+        <h1 id="page-title">函数的间断点分类</h1>
+        <p class="intro-copy">分类的核心不是先看函数值，而是先分别考察左极限和右极限。两者是否为有限实数、是否相等，决定了间断点属于哪一类。</p>
+      </div>
+      <div class="limit-pair" aria-label="左右极限记号">
+        <div>
+          <span class="small-label">左极限</span>
+          <span class="math">lim<sub>x→a<sup>−</sup></sub> f(x)</span>
+        </div>
+        <div>
+          <span class="small-label">右极限</span>
+          <span class="math">lim<sub>x→a<sup>+</sup></sub> f(x)</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="classification-map" aria-labelledby="map-title">
+      <div class="map-question">
+        <strong id="map-title">第一步：左右极限是否都存在且为有限实数？</strong>
+        <span class="question-formula">L<sub>−</sub> = lim<sub>x→a<sup>−</sup></sub>f(x)，L<sub>+</sub> = lim<sub>x→a<sup>+</sup></sub>f(x)</span>
+      </div>
+      <div class="map-branches">
+        <div class="branch first">
+          <div class="branch-head">
+            <h2>第一类间断点</h2>
+            <span>L<sub>−</sub>、L<sub>+</sub> 都是有限数</span>
+          </div>
+          <div class="branch-rule">继续比较两个单侧极限是否相等。</div>
+          <div class="type-row">
+            <div class="type-cell removable">
+              <strong>可去间断点</strong>
+              <span>L<sub>−</sub> = L<sub>+</sub>，但 f(a) 未定义或不等于共同极限。</span>
+            </div>
+            <div class="type-cell jump">
+              <strong>跳跃间断点</strong>
+              <span>L<sub>−</sub> ≠ L<sub>+</sub>，函数图像在 a 处发生有限跳跃。</span>
+            </div>
+          </div>
+          <p class="continuity-note">若 L<sub>−</sub> = L<sub>+</sub> = f(a)，则 a 是连续点，不是间断点。</p>
+        </div>
+
+        <div class="branch second">
+          <div class="branch-head">
+            <h2>第二类间断点</h2>
+            <span>至少一个单侧有限极限不存在</span>
+          </div>
+          <div class="branch-rule">继续判断“不存在”是趋于无穷，还是持续振荡。</div>
+          <div class="type-row">
+            <div class="type-cell infinite">
+              <strong>无穷间断点</strong>
+              <span>至少一个单侧极限为 +∞ 或 −∞，函数值无界增长。</span>
+            </div>
+            <div class="type-cell oscillatory">
+              <strong>振荡间断点</strong>
+              <span>至少一侧无限振荡，无法趋近某个有限值或无穷。</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="examples-title">
+      <div class="section-heading">
+        <h2 id="examples-title">四类典型图像</h2>
+        <p>比较 x 从 a 左右两侧靠近时的函数趋势</p>
+      </div>
+
+      <div class="type-tabs" role="tablist" aria-label="间断点类型">
+        <button class="type-tab" id="tab-removable" type="button" role="tab" aria-selected="true" aria-controls="type-panel" data-type="removable">可去间断点</button>
+        <button class="type-tab" id="tab-jump" type="button" role="tab" aria-selected="false" aria-controls="type-panel" data-type="jump">跳跃间断点</button>
+        <button class="type-tab" id="tab-infinite" type="button" role="tab" aria-selected="false" aria-controls="type-panel" data-type="infinite">无穷间断点</button>
+        <button class="type-tab" id="tab-oscillatory" type="button" role="tab" aria-selected="false" aria-controls="type-panel" data-type="oscillatory">振荡间断点</button>
+      </div>
+
+      <div class="lab" id="type-panel" role="tabpanel" aria-labelledby="tab-removable">
+        <div class="plot-column">
+          <div class="plot-head">
+            <div>
+              <h3 id="plot-title">可去间断点</h3>
+              <div class="family-label" id="family-label">第一类间断点</div>
+            </div>
+            <div class="formula-chip" id="formula-chip"></div>
+          </div>
+          <div class="plot-wrap">
+            <svg id="function-plot" viewBox="0 0 640 360" role="img" aria-labelledby="svg-title svg-desc">
+              <title id="svg-title">函数间断点示意图</title>
+              <desc id="svg-desc">显示所选间断点类型的函数图像以及 x 等于 a 的位置。</desc>
+            </svg>
+          </div>
+          <div class="plot-caption">
+            <div class="legend">
+              <span class="legend-item"><i class="legend-line" aria-hidden="true"></i>函数图像</span>
+              <span class="legend-item"><i class="legend-guide" aria-hidden="true"></i>x = a</span>
+            </div>
+            <span id="graph-note"></span>
+          </div>
+        </div>
+
+        <aside class="detail-column" aria-live="polite">
+          <h3 id="detail-title">可去间断点</h3>
+          <p class="definition" id="definition"></p>
+          <div class="limit-list">
+            <div class="limit-row">
+              <span class="limit-name">左极限 L<sub>−</sub></span>
+              <span class="limit-value" id="left-limit"></span>
+            </div>
+            <div class="limit-row">
+              <span class="limit-name">右极限 L<sub>+</sub></span>
+              <span class="limit-value" id="right-limit"></span>
+            </div>
+            <div class="limit-row">
+              <span class="limit-name">函数值 f(a)</span>
+              <span class="limit-value" id="point-value"></span>
+            </div>
+          </div>
+          <div class="diagnosis">
+            <strong id="diagnosis-title"></strong>
+            <span id="diagnosis-copy"></span>
+          </div>
+          <div class="path">判定路径：<b id="decision-path"></b></div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="reference" aria-labelledby="reference-title">
+      <h2 id="reference-title">分类速查</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>类型</th>
+              <th>左右极限</th>
+              <th>总极限</th>
+              <th>识别要点</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="table-type removable"><i class="type-dot" aria-hidden="true"></i>可去间断点</span></td>
+              <td>都存在且有限，并且相等</td>
+              <td>存在</td>
+              <td>只需补上或改正 f(a)，函数即可连续</td>
+            </tr>
+            <tr>
+              <td><span class="table-type jump"><i class="type-dot" aria-hidden="true"></i>跳跃间断点</span></td>
+              <td>都存在且有限，但不相等</td>
+              <td>不存在</td>
+              <td>左右两侧分别趋于两个不同的有限值</td>
+            </tr>
+            <tr>
+              <td><span class="table-type infinite"><i class="type-dot" aria-hidden="true"></i>无穷间断点</span></td>
+              <td>至少一个趋于 +∞ 或 −∞</td>
+              <td>有限极限不存在</td>
+              <td>图像在间断点附近无界，常出现竖直渐近线</td>
+            </tr>
+            <tr>
+              <td><span class="table-type oscillatory"><i class="type-dot" aria-hidden="true"></i>振荡间断点</span></td>
+              <td>至少一个因无限振荡而不存在</td>
+              <td>不存在</td>
+              <td>靠近间断点时函数值不稳定在任何确定趋势上</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer>间断点分类的顺序：单侧极限是否有限存在 → 是否相等 → 是否等于函数值。</footer>
+
+  <script>
+    (() => {
+      const data = {
+        removable: {
+          title: '可去间断点',
+          family: '第一类间断点',
+          color: '#167d67',
+          soft: '#e8f5f1',
+          formula: 'f(x)=(x²−1)/(x−1)，x≠1；f(1)=0',
+          definition: '左右极限都存在且相等，但函数在该点没有定义，或函数值不等于这个共同极限。',
+          left: '2',
+          right: '2',
+          value: '0',
+          diagnosisTitle: '共同极限存在，但没有接上',
+          diagnosis: '把 f(1) 重新定义为 2，间断就可以被“去掉”。',
+          path: '两侧有限 → 左右相等 → 不等于 f(a)',
+          note: '空心点表示极限位置，实心点表示实际函数值',
+          a: 1,
+          xDomain: [-3, 3],
+          yDomain: [-2.5, 4.2]
+        },
+        jump: {
+          title: '跳跃间断点',
+          family: '第一类间断点',
+          color: '#3f67c6',
+          soft: '#edf2ff',
+          formula: 'f(x)=−1（x<0）；f(x)=1（x≥0）',
+          definition: '左右极限都存在且都是有限数，但两个单侧极限不相等，因此总极限不存在。',
+          left: '−1',
+          right: '1',
+          value: '1',
+          diagnosisTitle: '两侧各有归宿，但不是同一个值',
+          diagnosis: '无论怎样修改 f(0)，都不能让左右极限相等。',
+          path: '两侧有限 → 左右不相等',
+          note: '两条水平分支在 x=0 处相差 2',
+          a: 0,
+          xDomain: [-3, 3],
+          yDomain: [-2.4, 2.4]
+        },
+        infinite: {
+          title: '无穷间断点',
+          family: '第二类间断点',
+          color: '#c06c11',
+          soft: '#fff3e3',
+          formula: 'f(x)=1/x²（x≠0），f(0)=0',
+          definition: '至少有一个单侧极限趋于正无穷或负无穷，因此该侧不存在有限极限。',
+          left: '+∞',
+          right: '+∞',
+          value: '0',
+          diagnosisTitle: '函数值在间断点附近无界增大',
+          diagnosis: 'x=0 是竖直渐近线；给 f(0) 指定任何有限值都无法消除间断。',
+          path: '至少一侧有限极限不存在 → 趋于无穷',
+          note: '越靠近 x=0，函数值越大',
+          a: 0,
+          xDomain: [-3, 3],
+          yDomain: [-.7, 5.8]
+        },
+        oscillatory: {
+          title: '振荡间断点',
+          family: '第二类间断点',
+          color: '#aa4668',
+          soft: '#fbeef3',
+          formula: 'f(x)=sin(1/x)（x≠0），f(0)=0',
+          definition: '至少有一侧在靠近间断点时持续振荡，既不趋于有限值，也不趋于正负无穷。',
+          left: '不存在（振荡）',
+          right: '不存在（振荡）',
+          value: '0',
+          diagnosisTitle: '振荡频率无限增大',
+          diagnosis: '函数值始终在 −1 与 1 之间变化，但无法稳定趋近任何一个数。',
+          path: '至少一侧有限极限不存在 → 持续振荡',
+          note: '靠近 x=0 时波动越来越密集',
+          a: 0,
+          xDomain: [-1.25, 1.25],
+          yDomain: [-1.55, 1.55]
+        }
+      };
+
+      const tabs = [...document.querySelectorAll('.type-tab')];
+      const panel = document.getElementById('type-panel');
+      const svg = document.getElementById('function-plot');
+      const NS = 'http://www.w3.org/2000/svg';
+
+      function el(name, attrs = {}, text = '') {
+        const node = document.createElementNS(NS, name);
+        Object.entries(attrs).forEach(([key, value]) => node.setAttribute(key, value));
+        if (text) node.textContent = text;
+        return node;
+      }
+
+      function setText(id, text) {
+        document.getElementById(id).textContent = text;
+      }
+
+      function draw(type) {
+        const item = data[type];
+        const width = 640;
+        const height = 360;
+        const margin = { top: 22, right: 28, bottom: 38, left: 48 };
+        const [xmin, xmax] = item.xDomain;
+        const [ymin, ymax] = item.yDomain;
+        const sx = x => margin.left + (x - xmin) / (xmax - xmin) * (width - margin.left - margin.right);
+        const sy = y => height - margin.bottom - (y - ymin) / (ymax - ymin) * (height - margin.top - margin.bottom);
+
+        svg.replaceChildren();
+        svg.style.setProperty('--type-color', item.color);
+        svg.style.setProperty('--type-soft', item.soft);
+        svg.append(el('title', { id: 'svg-title' }, item.title + '函数图像'));
+        svg.append(el('desc', { id: 'svg-desc' }, item.definition));
+
+        const defs = el('defs');
+        const clip = el('clipPath', { id: 'plot-clip' });
+        clip.append(el('rect', {
+          x: margin.left,
+          y: margin.top,
+          width: width - margin.left - margin.right,
+          height: height - margin.top - margin.bottom
+        }));
+        defs.append(clip);
+        svg.append(defs);
+
+        const plot = el('g', { 'clip-path': 'url(#plot-clip)' });
+
+        const xTicks = type === 'oscillatory' ? [-1, -.5, 0, .5, 1] : [-2, -1, 0, 1, 2];
+        const yTicks = type === 'infinite' ? [0, 1, 2, 3, 4, 5] : [-2, -1, 0, 1, 2, 3, 4];
+
+        xTicks.filter(x => x >= xmin && x <= xmax).forEach(x => {
+          plot.append(el('line', { x1: sx(x), y1: margin.top, x2: sx(x), y2: height - margin.bottom, class: 'chart-grid' }));
+          svg.append(el('text', { x: sx(x), y: height - 16, 'text-anchor': 'middle', class: 'chart-text' }, String(x)));
+        });
+
+        yTicks.filter(y => y >= ymin && y <= ymax).forEach(y => {
+          plot.append(el('line', { x1: margin.left, y1: sy(y), x2: width - margin.right, y2: sy(y), class: 'chart-grid' }));
+          if (y !== 0) svg.append(el('text', { x: margin.left - 10, y: sy(y) + 4, 'text-anchor': 'end', class: 'chart-text' }, String(y)));
+        });
+
+        if (ymin <= 0 && ymax >= 0) plot.append(el('line', { x1: margin.left, y1: sy(0), x2: width - margin.right, y2: sy(0), class: 'chart-axis' }));
+        if (xmin <= 0 && xmax >= 0) plot.append(el('line', { x1: sx(0), y1: margin.top, x2: sx(0), y2: height - margin.bottom, class: 'chart-axis' }));
+        plot.append(el('line', { x1: sx(item.a), y1: margin.top, x2: sx(item.a), y2: height - margin.bottom, class: 'chart-guide' }));
+        svg.append(el('text', { x: sx(item.a) + 7, y: margin.top + 14, class: 'chart-label' }, 'x = a'));
+
+        const addPath = points => {
+          const d = points.map((p, i) => `${i ? 'L' : 'M'}${sx(p[0]).toFixed(2)},${sy(p[1]).toFixed(2)}`).join(' ');
+          plot.append(el('path', { d, class: 'chart-curve' }));
+        };
+
+        const sample = (start, end, fn, count = 260) => {
+          const points = [];
+          for (let i = 0; i <= count; i++) {
+            const x = start + (end - start) * i / count;
+            const y = fn(x);
+            if (Number.isFinite(y) && y >= ymin && y <= ymax) points.push([x, y]);
+          }
+          return points;
+        };
+
+        if (type === 'removable') {
+          addPath(sample(xmin, .985, x => x + 1));
+          addPath(sample(1.015, xmax, x => x + 1));
+          plot.append(el('circle', { cx: sx(1), cy: sy(2), r: 6, class: 'chart-limit' }));
+          plot.append(el('circle', { cx: sx(1), cy: sy(0), r: 6, class: 'chart-value' }));
+          svg.append(el('text', { x: sx(1) + 10, y: sy(2) - 9, class: 'chart-label' }, '极限值 2'));
+          svg.append(el('text', { x: sx(1) + 10, y: sy(0) + 20, class: 'chart-label' }, 'f(1)=0'));
+        }
+
+        if (type === 'jump') {
+          addPath([[xmin, -1], [-.02, -1]]);
+          addPath([[.02, 1], [xmax, 1]]);
+          plot.append(el('circle', { cx: sx(0), cy: sy(-1), r: 6, class: 'chart-limit' }));
+          plot.append(el('circle', { cx: sx(0), cy: sy(1), r: 6, class: 'chart-value' }));
+          svg.append(el('text', { x: sx(0) - 12, y: sy(-1) + 25, 'text-anchor': 'end', class: 'chart-label' }, 'L₋=−1'));
+          svg.append(el('text', { x: sx(0) + 12, y: sy(1) - 10, class: 'chart-label' }, 'L₊=1'));
+        }
+
+        if (type === 'infinite') {
+          const threshold = Math.sqrt(1 / ymax);
+          addPath(sample(xmin, -threshold, x => 1 / (x * x), 360));
+          addPath(sample(threshold, xmax, x => 1 / (x * x), 360));
+          plot.append(el('circle', { cx: sx(0), cy: sy(0), r: 6, class: 'chart-value' }));
+          const arrowY = margin.top + 6;
+          [-1, 1].forEach(sign => {
+            const x = sx(sign * threshold);
+            plot.append(el('path', { d: `M${x - 5},${arrowY + 9} L${x},${arrowY} L${x + 5},${arrowY + 9}`, fill: 'none', stroke: item.color, 'stroke-width': 2 }));
+          });
+          svg.append(el('text', { x: sx(0) + 12, y: margin.top + 16, class: 'chart-label' }, 'f(x)→+∞'));
+        }
+
+        if (type === 'oscillatory') {
+          plot.append(el('rect', { x: sx(-.12), y: margin.top, width: sx(.12) - sx(-.12), height: height - margin.top - margin.bottom, class: 'chart-zone' }));
+          addPath(sample(xmin, -.015, x => Math.sin(1 / x), 1800));
+          addPath(sample(.015, xmax, x => Math.sin(1 / x), 1800));
+          plot.append(el('circle', { cx: sx(0), cy: sy(0), r: 6, class: 'chart-value' }));
+          svg.append(el('text', { x: sx(0) + 12, y: sy(1.18), class: 'chart-label' }, '无限振荡'));
+        }
+
+        svg.append(plot);
+        svg.append(el('text', { x: width - margin.right, y: height - 16, 'text-anchor': 'end', class: 'chart-label' }, 'x'));
+        svg.append(el('text', { x: margin.left + 8, y: margin.top + 14, class: 'chart-label' }, 'y'));
+      }
+
+      function render(type) {
+        const item = data[type];
+        panel.style.setProperty('--type-color', item.color);
+        panel.style.setProperty('--type-soft', item.soft);
+        panel.setAttribute('aria-labelledby', `tab-${type}`);
+
+        setText('plot-title', item.title);
+        setText('family-label', item.family);
+        setText('formula-chip', item.formula);
+        setText('graph-note', item.note);
+        setText('detail-title', item.title);
+        setText('definition', item.definition);
+        setText('left-limit', item.left);
+        setText('right-limit', item.right);
+        setText('point-value', item.value);
+        setText('diagnosis-title', item.diagnosisTitle);
+        setText('diagnosis-copy', item.diagnosis);
+        setText('decision-path', item.path);
+
+        draw(type);
+      }
+
+      function selectTab(tab, focus = false) {
+        tabs.forEach(button => button.setAttribute('aria-selected', String(button === tab)));
+        render(tab.dataset.type);
+        if (focus) tab.focus();
+      }
+
+      tabs.forEach((tab, index) => {
+        tab.addEventListener('click', () => selectTab(tab));
+        tab.addEventListener('keydown', event => {
+          if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+          event.preventDefault();
+          let next = index;
+          if (event.key === 'ArrowLeft') next = (index - 1 + tabs.length) % tabs.length;
+          if (event.key === 'ArrowRight') next = (index + 1) % tabs.length;
+          if (event.key === 'Home') next = 0;
+          if (event.key === 'End') next = tabs.length - 1;
+          selectTab(tabs[next], true);
+        });
+      });
+
+      render('removable');
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f5f6f3">
+<title>在 0 附近 · 等价无穷小交互图</title>
+<style>
+:root{color-scheme:light;--bg:#f5f6f3;--paper:#fff;--ink:#202d35;--muted:#63737a;--border:#dce3de;--soft:#edf2ee;--accent:#146954;--accent-soft:#e6f2ec;--trig:#147c70;--tan:#bd6c20;--cos:#4265bb;--log:#8457a5;--a:#b84e70;--exp:#227b9d;--root:#748027;--power:#9c592e}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.6 "Microsoft YaHei","PingFang SC",system-ui,sans-serif}button,input,select{font:inherit}button{cursor:pointer}button,input,select{accent-color:var(--accent)}button:focus-visible,input:focus-visible,select:focus-visible,.plot:focus-visible{outline:3px solid #9fc5b5;outline-offset:3px}button{color:var(--ink)}button:disabled{cursor:default;opacity:.45}.math{font-family:"Cambria Math",Cambria,"Times New Roman",serif;font-size:1.13em}.num{font-family:Consolas,"SFMono-Regular",monospace;font-variant-numeric:tabular-nums}.shell{max-width:1440px;margin:0 auto;padding:28px 32px 36px}.top{display:flex;align-items:center;justify-content:space-between;gap:24px;padding-bottom:22px}.eyebrow{font-size:12px;letter-spacing:.15em;color:var(--accent);font-weight:700}h1{font-size:30px;letter-spacing:-.03em;margin:4px 0 6px;font-weight:650}h1 span{color:var(--accent)}.intro{color:var(--muted);margin:0}.definition{text-align:right;flex-shrink:0}.definition .math{font-size:21px}.definition small{display:block;color:var(--muted);margin-top:4px}.fraction{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;line-height:1.15;margin:0 5px}.fraction>span:first-child{border-bottom:1px solid currentColor;padding:0 5px 2px}.fraction>span:last-child{padding:2px 5px 0}.limit{display:inline-flex;flex-direction:column;vertical-align:middle;line-height:1.05;align-items:center;margin-right:3px}.limit small{font-size:.6em;color:inherit;margin:0}.workspace{border:1px solid var(--border);border-radius:16px;background:var(--paper);box-shadow:0 12px 34px #233a2b06;overflow:hidden}.selection{display:flex;flex-wrap:wrap;gap:7px;padding:18px 20px 14px;border-bottom:1px solid var(--border)}.group-button{border:1px solid var(--border);background:var(--paper);padding:8px 12px;border-radius:8px;display:flex;align-items:center;gap:7px;min-height:42px;transition:background .15s,border-color .15s}.group-button:hover{background:var(--soft)}.group-button[aria-pressed="true"]{background:var(--accent-soft);border-color:#7fab9c;color:#12553e}.group-button .math{white-space:nowrap}.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--series);flex-shrink:0}.parameters{display:flex;align-items:center;gap:22px;flex-wrap:wrap;padding:12px 20px;background:#fafbf9;border-bottom:1px solid var(--border)}.parameters label{display:flex;align-items:center;gap:7px;white-space:nowrap}.parameters input{width:73px;border:1px solid #cdd7d0;border-radius:5px;padding:4px 6px;background:var(--paper);color:var(--ink)}.parameters small{color:var(--muted);margin-left:auto}.warning{margin:0;padding:9px 20px;background:#fff2df;color:#85500d}.warning[hidden]{display:none}.content{display:grid;grid-template-columns:minmax(0,1fr) 310px}.graph-area{min-width:0;padding:20px 20px 12px}.chart-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}.chart-heading h2{font-size:16px;margin:0 0 2px;font-weight:600}.subtle{color:var(--muted);font-size:12px;margin:0}.line-key{display:flex;gap:12px;color:var(--muted);font-size:12px;white-space:nowrap;align-items:center;padding-top:2px}.line-key>span{display:flex;align-items:center;gap:5px}.sample{width:22px;border-top:2px solid #50686a}.sample.dashed{border-top:3px dashed #50686a;opacity:.65}.plot{width:100%;height:440px;margin-top:8px;display:block;touch-action:none;user-select:none;-webkit-user-select:none;border-radius:4px}.plot text{font-family:Consolas,"Microsoft YaHei",sans-serif;fill:var(--muted);font-size:11px}.plot .axis-title{font-family:"Cambria Math",Cambria,serif;fill:var(--ink);font-size:15px}.plot .axis-line{stroke:#a6b8ad;stroke-width:1}.plot .grid-line{stroke:#e8ede9;stroke-width:1}.plot .tick-zero{fill:#80968a}.plot .probe-label{font-size:11px;fill:var(--accent)}.chart-help{display:flex;gap:12px;justify-content:space-between;flex-wrap:wrap;color:var(--muted);font-size:12px;margin:2px 0 10px}.cos-mode{display:flex;gap:10px;flex-wrap:wrap;font-size:12px;margin:8px 0 0}.cos-mode[hidden]{display:none}.cos-mode label{display:flex;gap:4px;align-items:center}.legend{display:flex;gap:7px 16px;flex-wrap:wrap;min-height:28px;color:var(--muted);font-size:12px}.legend span{display:flex;align-items:center;gap:6px}.legend .math{font-size:14px}.display-controls{display:flex;gap:16px;margin:8px 0 0;color:var(--muted);font-size:12px;flex-wrap:wrap}.display-controls label{display:flex;align-items:center;gap:4px}.inspector{background:#fbfcfa;border-left:1px solid var(--border);padding:20px 18px;min-width:0}.inspector h3{font-size:13px;font-weight:600;margin:0 0 12px}.x-heading{display:flex;align-items:center;justify-content:space-between}.x-display{font-size:23px;letter-spacing:-.05em;margin:0 0 12px;color:var(--accent)}.sign-buttons{display:flex;gap:5px}.small-button{border:1px solid var(--border);background:var(--paper);border-radius:5px;padding:3px 7px;min-width:28px}.small-button[aria-pressed="true"]{background:var(--accent-soft);border-color:#8db4a4}.probe-range{width:100%;margin:0 0 3px}.range-caption{display:flex;justify-content:space-between;color:var(--muted);font-size:11px}.readout-table{border-collapse:collapse;width:100%;margin-top:17px;font-size:12px}.readout-table th{font-weight:400;color:var(--muted);text-align:right;padding:0 0 7px;border-bottom:1px solid var(--border)}.readout-table th:first-child{text-align:left}.readout-table td{padding:9px 0;border-bottom:1px solid #e7ece7;vertical-align:middle;text-align:right}.readout-table td:first-child{text-align:left;padding-right:6px}.readout-table .row-name{display:flex;align-items:center;gap:5px;max-width:115px}.readout-table .math{font-size:14px;white-space:nowrap}.readout-table .ratio-value{font-family:Consolas,monospace;white-space:nowrap}.readout-table .error-value{font-size:11px;color:var(--muted);white-space:nowrap}.details{margin-top:14px;border-top:1px solid var(--border);padding-top:12px}.details:empty{display:none}.value-line{display:flex;justify-content:space-between;gap:10px;font-size:12px;padding:4px 0;align-items:baseline}.value-line>span:first-child{color:var(--muted)}.value-line .num{font-size:13px;overflow-wrap:anywhere}.note{color:var(--muted);font-size:12px;margin:14px 0 0}.note strong{font-weight:500;color:var(--ink)}.formula-detail{margin:0 0 7px;font-size:18px;overflow-wrap:anywhere}.limit-note{padding-top:12px;margin-top:14px;border-top:1px solid var(--border);font-size:12px;color:var(--muted)}.limit-note .math{color:var(--ink);font-size:17px}.zoom-panel{border-top:1px solid var(--border);padding:16px 20px;display:grid;grid-template-columns:auto minmax(130px,1fr) auto;gap:22px;align-items:center}.zoom-value{font-size:12px;color:var(--muted);min-width:172px}.zoom-value strong{display:block;color:var(--ink);font-weight:500;font-size:16px;margin-top:2px}.zoom-track{min-width:0}.zoom-track label{display:flex;justify-content:space-between;font-size:12px;gap:8px}.zoom-track input{width:100%;margin:8px 0 0}.zoom-marks{display:flex;justify-content:space-between;font-size:11px;color:var(--muted)}.zoom-actions{display:flex;gap:6px;align-items:center}.button{border:1px solid var(--border);background:var(--paper);border-radius:7px;padding:8px 11px;min-height:38px;white-space:nowrap}.button:hover{background:var(--soft)}.button.primary{background:var(--accent);border-color:var(--accent);color:#fff}.button.zoom-step{font-size:20px;padding:2px 10px;min-width:36px}.beneath{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:28px;margin-top:24px}.beneath h3{font-size:13px;margin:0 0 5px;font-weight:600}.beneath p{margin:0;color:var(--muted);font-size:12px}.beneath .math{color:var(--ink);font-size:15px}.footer{color:var(--muted);font-size:11px;margin-top:22px;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}.status-line{font-size:12px;color:var(--accent);min-height:20px;margin-top:7px}.live-status{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+@media(min-width:1450px){.plot{height:500px}}
+@media(max-width:1100px){.shell{padding:22px 20px}.content{grid-template-columns:minmax(0,1fr) 285px}.graph-area{padding:16px 12px 12px}.zoom-panel{gap:12px;grid-template-columns:150px 1fr auto}.zoom-value{min-width:0}.zoom-actions{flex-wrap:wrap;max-width:218px}.group-button{padding:7px 9px}.parameters{gap:15px}.line-key{gap:8px}.plot{height:420px}}
+@media(max-width:800px){.shell{padding:18px 14px}.top{align-items:flex-start;gap:15px}h1{font-size:25px}.definition{display:none}.content{grid-template-columns:1fr}.inspector{border-left:0;border-top:1px solid var(--border);display:grid;grid-template-columns:1fr 1.5fr;column-gap:20px;padding:16px 18px}.probe-control{grid-column:1}.readout-table{grid-column:2;grid-row:1 / span 4;margin:0}.details{grid-column:1}.limit-note{grid-column:1 / -1}.inspector>.note{grid-column:1 / -1}.zoom-panel{grid-template-columns:1fr auto}.zoom-value{grid-column:1}.zoom-track{grid-row:2;grid-column:1 / -1}.zoom-actions{grid-column:2;grid-row:1;max-width:none}.beneath{gap:18px}.parameters small{width:100%;margin-left:0}.plot{height:420px}.selection{padding:12px;gap:6px}.group-button{font-size:12px;min-height:38px}.chart-heading{flex-wrap:wrap}.status-line{margin-top:3px}}
+@media(max-width:480px){.shell{padding:15px 10px}.intro{font-size:12px}h1{font-size:24px}.eyebrow{font-size:10px}.workspace{border-radius:11px}.parameters{padding:10px 12px;gap:9px 14px;font-size:12px}.parameters input{width:62px}.parameters small{font-size:11px}.plot{height:350px}.graph-area{padding:14px 8px 10px}.inspector{display:block;padding:15px}.readout-table{margin-top:16px}.readout-table .row-name{max-width:none}.readout-table td{padding:7px 0}.readout-table .math{font-size:15px}.zoom-panel{padding:12px;gap:10px}.zoom-actions{gap:4px}.button{padding:6px 8px;font-size:12px;min-height:36px}.button.zoom-step{font-size:18px;padding:3px 8px;min-width:30px}.zoom-value strong{font-size:13px}.zoom-value{font-size:11px}.zoom-actions .reset{display:none}.beneath{grid-template-columns:1fr;gap:14px;margin:20px 4px 0}.chart-help{font-size:11px;gap:3px}.zoom-track label{font-size:11px}.legend{gap:5px 12px}.group-button{padding:6px 8px}.footer{font-size:10px;margin:18px 4px 0}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+<main class="shell">
+  <header class="top">
+    <div>
+      <div class="eyebrow">CALCULUS EXPLORER / 高等数学</div>
+      <h1>在 <span>0</span> 附近，越来越靠近</h1>
+      <p class="intro">把原函数和对应等价式画在一起，持续放大，观察它们如何贴合。</p>
+    </div>
+    <div class="definition">
+      <div class="math">f(x) ∼ g(x) &nbsp;⇔&nbsp; <span class="limit">lim<small>x → 0</small></span><span class="fraction"><span>f(x)</span><span>g(x)</span></span> = 1</div>
+      <small>等价看比值，而不只看差值。</small>
+    </div>
+  </header>
+
+  <section class="workspace" aria-label="等价无穷小交互实验">
+    <nav class="selection" aria-label="选择函数组">
+      <button class="group-button" type="button" data-group="all" aria-pressed="true">全部叠加</button>
+      <button class="group-button" type="button" data-group="trig" aria-pressed="false"><i class="dot" style="--series:var(--trig)"></i><span class="math">x ∼ sin x ∼ tan x</span></button>
+      <button class="group-button" type="button" data-group="cos" aria-pressed="false"><i class="dot" style="--series:var(--cos)"></i><span class="math">cos x ∼ 1 − x²/2</span></button>
+      <button class="group-button" type="button" data-group="log" aria-pressed="false"><i class="dot" style="--series:var(--log)"></i><span class="math">ln(1+x) ∼ x</span></button>
+      <button class="group-button" type="button" data-group="a" aria-pressed="false"><i class="dot" style="--series:var(--a)"></i><span class="math">aˣ − 1 ∼ (ln a)x</span></button>
+      <button class="group-button" type="button" data-group="exp" aria-pressed="false"><i class="dot" style="--series:var(--exp)"></i><span class="math">eˣ − 1 ∼ x</span></button>
+      <button class="group-button" type="button" data-group="root" aria-pressed="false"><i class="dot" style="--series:var(--root)"></i><span class="math">ⁿ√(1+x) − 1 ∼ x/n</span></button>
+      <button class="group-button" type="button" data-group="power" aria-pressed="false"><i class="dot" style="--series:var(--power)"></i><span class="math">(1+x)ᵅ − 1 ∼ αx</span></button>
+    </nav>
+    <div class="parameters">
+      <label for="base"><span class="math">a =</span><input id="base" type="number" value="2" min="0.05" max="10" step="0.05" aria-label="指数函数底数 a"></label>
+      <label for="degree"><span class="math">n =</span><input id="degree" type="number" value="3" min="1" max="20" step="1" aria-label="根指数 n"></label>
+      <label for="alpha"><span class="math">α =</span><input id="alpha" type="number" value="0.5" min="-3" max="3" step="0.1" aria-label="幂函数指数 alpha"></label>
+      <small>角度用弧度 · a &gt; 0、a ≠ 1 · n 为正整数 · α ≠ 0</small>
+    </div>
+    <p class="warning" id="warning" role="alert" hidden></p>
+
+    <div class="content">
+      <div class="graph-area">
+        <div class="chart-heading">
+          <div><h2 id="chart-title">全部函数 · 每一组与自己的等价式比较</h2><p class="subtle" id="chart-subtitle">不同组的斜率可以不同，不要求所有曲线互相重合。</p></div>
+          <div class="line-key"><span><i class="sample"></i>原函数 f</span><span><i class="sample dashed"></i>等价式 g</span></div>
+        </div>
+        <div class="cos-mode" id="cos-mode" hidden>
+          <label><input type="radio" name="cos-mode" value="inf" checked>无穷小：1 − cos x 与 x²/2</label>
+          <label><input type="radio" name="cos-mode" value="original">原式：cos x 与 1 − x²/2</label>
+        </div>
+        <svg class="plot" id="plot" role="img" aria-label="原函数与等价式的曲线，滚轮可围绕 x 等于零缩放" tabindex="0"></svg>
+        <div class="chart-help"><span>滚轮 / 双指缩放 · 始终围绕 x = 0</span><span>点击或拖动竖线查看数值 · 键盘 + / − 缩放</span></div>
+        <div class="legend" id="legend" aria-label="曲线图例"></div>
+        <div class="display-controls">
+          <label><input id="show-functions" type="checkbox" checked>显示原函数</label>
+          <label><input id="show-approximants" type="checkbox" checked>显示等价式</label>
+        </div>
+        <div class="status-line" id="status"></div>
+      </div>
+
+      <aside class="inspector" aria-label="同一点的数值比较">
+        <div class="probe-control">
+          <div class="x-heading"><h3>同一个 x，比较一下</h3><div class="sign-buttons" aria-label="从哪一侧趋近"><button class="small-button" id="negative" type="button" aria-pressed="false" title="从左侧趋近">−</button><button class="small-button" id="zero" type="button" aria-pressed="false" title="查看 x 等于零">0</button><button class="small-button" id="positive" type="button" aria-pressed="true" title="从右侧趋近">+</button></div></div>
+          <div class="x-display num" id="x-display">x = 0.4</div>
+          <label for="probe" class="live-status">图上观察点的位置</label><input class="probe-range" id="probe" type="range" min="-100" max="100" step="0.1" value="50">
+          <div class="range-caption"><span id="probe-left">−0.8</span><span>0</span><span id="probe-right">+0.8</span></div>
+        </div>
+        <table class="readout-table"><thead><tr><th>原函数</th><th>比值 f/g</th><th>|f/g − 1|</th></tr></thead><tbody id="readouts"></tbody></table>
+        <div class="details" id="details"></div>
+        <p class="note" id="inspector-note">比值越来越接近 <strong>1</strong>，相对偏差越来越接近 <strong>0</strong>，才是“等价”的关键。</p>
+        <div class="limit-note" id="limit-note">无穷小组在 x = 0 时比值为 0/0，不能直接代入；这里观察的是 <span class="math">x → 0</span> 的过程。</div>
+      </aside>
+    </div>
+
+    <div class="zoom-panel">
+      <div class="zoom-value">当前横轴范围<strong class="num" id="domain">[−0.8, 0.8]</strong></div>
+      <div class="zoom-track">
+        <label for="zoom"><span>连续放大，越来越接近 0</span><span class="num" id="zoom-factor">× 1</span></label>
+        <input id="zoom" type="range" min="0" max="12" step="0.005" value="0">
+        <div class="zoom-marks"><span>初始视野</span><span>10⁴ 倍</span><span>10⁸ 倍</span><span>10¹² 倍</span></div>
+      </div>
+      <div class="zoom-actions">
+        <button type="button" class="button zoom-step" id="zoom-out" aria-label="缩小视野">−</button>
+        <button type="button" class="button zoom-step" id="zoom-in" aria-label="向零放大">+</button>
+        <button type="button" class="button reset" id="reset">初始视野</button>
+        <button type="button" class="button primary" id="play" aria-pressed="false">自动靠近 0</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="beneath">
+    <section><h3>怎么观察？</h3><p>先看“全部叠加”，再点任意公式单独比较。滚轮向上或拖动下方滑块，即可同时缩小横、纵轴视野；纵轴会随函数尺度调整，让贴近的过程一直可见。</p></section>
+    <section><h3>余弦这一组，稍有不同</h3><p><span class="math">cos x → 1</span>，它本身不是无穷小。默认画 <span class="math">1−cos x ∼ x²/2</span>；点余弦后可切换查看你列出的原式。</p></section>
+    <section><h3>曲线贴近，还要看比值</h3><p><span class="math">2x</span> 与 <span class="math">x</span> 都趋于 0，差也趋于 0，但比值恒为 2，因此不等价。这里每一组都可以用右侧比值核实。</p></section>
+  </div>
+  <footer class="footer"><span>全部七组关系已包含 · 支持离线打开 · 不需要安装任何库</span><span>在极小尺度上，曲线重合受屏幕分辨率限制；数值同时给出相对偏差。</span></footer>
+  <div class="live-status" id="live" aria-live="polite"></div>
+</main>
+<script>
+(() => {
+  'use strict';
+  const byId = id => document.getElementById(id);
+  const plot = byId('plot');
+  const state = {group:'all', zoom:0, probe:0.5, base:2, degree:3, alpha:0.5, cosMode:'inf', functions:true, approximants:true};
+  const ZOOM_MAX = 12;
+  const colors = {sin:'#147c70',tan:'#bd6c20',cos:'#4265bb',log:'#8457a5',a:'#b84e70',exp:'#227b9d',root:'#748027',power:'#9c592e'};
+  const ns = 'http://www.w3.org/2000/svg';
+  let chart = null, running = false, animation = 0, drawRequest = 0, lastFrame = 0;
+  const superscripts = {'-':'⁻','0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'};
+  const superText = number => String(number).split('').map(c => superscripts[c] || c).join('');
+  function fmt(value, significant = 6) {
+    if (!Number.isFinite(value)) return '—';
+    if (value === 0 || Object.is(value,-0)) return '0';
+    const sign = value < 0 ? '−' : '';
+    const v = Math.abs(value);
+    if (v < 0.0001 || v >= 10000) {
+      const exponent = Math.floor(Math.log10(v));
+      const mantissa = Number((v / 10 ** exponent).toPrecision(significant));
+      return sign + mantissa + '×10' + superText(exponent);
+    }
+    return sign + Number(v.toPrecision(significant)).toString();
+  }
+  function ratioText(delta) {
+    if (!Number.isFinite(delta)) return '未定义';
+    if (delta === 0) return '1';
+    if (Math.abs(delta) < 5e-8) return '≈ 1';
+    return Number((1 + delta).toPrecision(8)).toString();
+  }
+  function sinDelta(x) {
+    const q=x*x;
+    return Math.abs(x)<0.05 ? q*(-1/6+q*(1/120+q*(-1/5040+q/362880))) : Math.sin(x)/x-1;
+  }
+  function tanDelta(x) {
+    const q=x*x;
+    return Math.abs(x)<0.05 ? q*(1/3+q*(2/15+q*(17/315+q*(62/2835+q*1382/155925)))) : Math.tan(x)/x-1;
+  }
+  function exponentialDelta(y) {
+    if(Math.abs(y)>=0.05) return Math.expm1(y)/y-1;
+    let term=1, delta=0;
+    for(let k=1;k<=12;k++){term*=y/(k+1);delta+=term;}
+    return delta;
+  }
+  function logarithmDelta(x) {
+    if(Math.abs(x)>=0.02) return Math.log1p(x)/x-1;
+    let power=1, delta=0;
+    for(let k=1;k<=14;k++){power*=-x;delta+=power/(k+1);}
+    return delta;
+  }
+  function powerDelta(x,alpha) {
+    if(Math.abs(x)>=0.02) return Math.expm1(alpha*Math.log1p(x))/(alpha*x)-1;
+    let term=1,delta=0;
+    for(let k=1;k<=14;k++){term*=(alpha-k)*x/(k+1);delta+=term;}
+    return delta;
+  }
+  function cosineDelta(x, original) {
+    const q=x*x;
+    if(original){
+      if(Math.abs(x)<0.05) return q*q*(1/24+q*(-1/720+q*(1/40320-q/3628800)))/(1-q/2);
+      return Math.cos(x)/(1-q/2)-1;
+    }
+    if(Math.abs(x)<0.05) return q*(-1/12+q*(1/360+q*(-1/20160+q/1814400)));
+    return 4*Math.sin(x/2)**2/q-1;
+  }
+  function getSeries() {
+    const original = state.group==='cos' && state.cosMode==='original';
+    const lnA=Math.log(state.base), beta=1/state.degree;
+    return [
+      {id:'sin',group:'trig',label:'sin x',gLabel:'x',formula:'sin x ∼ x',f:Math.sin,g:x=>x,delta:sinDelta},
+      {id:'tan',group:'trig',label:'tan x',gLabel:'x',formula:'tan x ∼ x',f:Math.tan,g:x=>x,delta:tanDelta},
+      {id:'cos',group:'cos',label:original?'cos x':'1 − cos x',gLabel:original?'1 − x²/2':'x²/2',formula:original?'cos x ∼ 1 − x²/2':'1 − cos x ∼ x²/2',f:original?Math.cos:x=>2*Math.sin(x/2)**2,g:original?x=>1-x*x/2:x=>x*x/2,delta:x=>cosineDelta(x,original),original},
+      {id:'log',group:'log',label:'ln(1+x)',gLabel:'x',formula:'ln(1+x) ∼ x',f:Math.log1p,g:x=>x,delta:logarithmDelta},
+      {id:'a',group:'a',label:'aˣ − 1',gLabel:'(ln a)x',formula:'aˣ − 1 ∼ (ln a)x',f:x=>Math.expm1(lnA*x),g:x=>lnA*x,delta:x=>exponentialDelta(lnA*x),invalid:state.base===1},
+      {id:'exp',group:'exp',label:'eˣ − 1',gLabel:'x',formula:'eˣ − 1 ∼ x',f:Math.expm1,g:x=>x,delta:exponentialDelta},
+      {id:'root',group:'root',label:'ⁿ√(1+x) − 1',gLabel:'x/n',formula:'ⁿ√(1+x) − 1 ∼ x/n',f:x=>Math.expm1(beta*Math.log1p(x)),g:x=>beta*x,delta:x=>powerDelta(x,beta)},
+      {id:'power',group:'power',label:'(1+x)ᵅ − 1',gLabel:'αx',formula:'(1+x)ᵅ − 1 ∼ αx',f:x=>Math.expm1(state.alpha*Math.log1p(x)),g:x=>state.alpha*x,delta:x=>powerDelta(x,state.alpha),invalid:state.alpha===0}
+    ].filter(s=>state.group==='all'||s.group===state.group);
+  }
+  const radius=()=>0.8*10**(-state.zoom);
+  function el(name, attrs={}, textValue) {
+    const element=document.createElementNS(ns,name);
+    for(const [key,value] of Object.entries(attrs)) element.setAttribute(key,value);
+    if(textValue!==undefined) element.textContent=textValue;
+    return element;
+  }
+  function niceTicks(min,max,count=5){
+    const span=max-min;
+    if(!(span>0))return [];
+    const rough=span/count, magnitude=10**Math.floor(Math.log10(rough));
+    const normal=rough/magnitude;
+    const step=(normal<=1?1:normal<=2?2:normal<=2.5?2.5:normal<=5?5:10)*magnitude;
+    const ticks=[];
+    for(let k=Math.ceil(min/step-1e-9);k<=Math.floor(max/step+1e-9);k++){
+      let val=k*step;
+      if(Math.abs(val)<step*1e-7)val=0;
+      ticks.push(val);
+    }
+    return ticks;
+  }
+  function requestDraw(){if(!drawRequest)drawRequest=requestAnimationFrame(()=>{drawRequest=0;render();});}
+  function render(){
+    const series=getSeries(),r=radius(),x=state.probe*r;
+    const width=Math.max(240,Math.round(plot.clientWidth));
+    const height=Math.round(plot.clientHeight)||440;
+    const small=width<500;
+    const margin={left:small?62:78,right:22,top:28,bottom:46};
+    const left=margin.left,right=width-margin.right,top=margin.top,bottom=height-margin.bottom;
+    const samples=401;
+    const data=series.map(s=>({...s,values:Array.from({length:samples},(_,i)=>{const u=(i/(samples-1)*2-1)*r;return{x:u,f:s.f(u),g:s.g(u)};})}));
+    const original=series.length===1&&series[0].original;
+    // Translate the cosine Taylor view to y=1 before scaling, preserving its shape at tiny x.
+    const offset=original?1:0;
+    function coordinateY(s,u,kind){
+      if(!original)return kind==='f'?s.f(u):s.g(u);
+      return kind==='f'?-2*Math.sin(u/2)**2:-u*u/2;
+    }
+    let ymin=0,ymax=0;
+    for(const s of series){for(let i=0;i<samples;i++){
+      const u=(i/(samples-1)*2-1)*r;
+      for(const kind of ['f','g']){
+        const v=coordinateY(s,u,kind);
+        if(Number.isFinite(v)){ymin=Math.min(ymin,v);ymax=Math.max(ymax,v);}
+      }
+    }}
+    let span=ymax-ymin;
+    if(span===0){span=r;ymin=-r/2;ymax=r/2;}
+    ymin-=span*.11;ymax+=span*.11;
+    const X=u=>left+(u+r)/(2*r)*(right-left);
+    const Y=v=>bottom-(v-ymin)/(ymax-ymin)*(bottom-top);
+    chart={r,X,Y,left,right,top,bottom,offset,width,height,series,coordinateY};
+    plot.setAttribute('viewBox',`0 0 ${width} ${height}`);
+    plot.replaceChildren();
+    plot.append(el('title',{},'等价无穷小：原函数与等价式在 x=0 附近的比较'));
+    plot.append(el('desc',{},`当前横轴范围为负${fmt(r)}到${fmt(r)}。实线为原函数，虚线为对应等价式。使用图下滑块放大，或切换函数组查看。`));
+    const defs=el('defs'),clip=el('clipPath',{id:'chart-clip'});
+    clip.append(el('rect',{x:left,y:top,width:right-left,height:bottom-top}));defs.append(clip);plot.append(defs);
+    const xTicks=niceTicks(-r,r,small?3:5),yTicks=niceTicks(ymin,ymax,small?4:5);
+    for(const t of xTicks){
+      const px=X(t);plot.append(el('line',{x1:px,x2:px,y1:top,y2:bottom,class:t===0?'axis-line':'grid-line'}));
+      plot.append(el('text',{x:px,y:bottom+21,'text-anchor':'middle',class:t===0?'tick-zero':''},fmt(t,3)));
+    }
+    for(const t of yTicks){
+      const py=Y(t);plot.append(el('line',{x1:left,x2:right,y1:py,y2:py,class:t===0?'axis-line':'grid-line'}));
+      plot.append(el('text',{x:left-10,y:py+4,'text-anchor':'end'},fmt(t,3)));
+    }
+    plot.append(el('text',{x:right+9,y:bottom+21,class:'axis-title'},'x'));
+    plot.append(el('text',{x:left-10,y:15,'text-anchor':'end',class:'axis-title'},original?'y − 1':'y'));
+    if(original)plot.append(el('text',{x:left+6,y:17},'以 y=1 为基准显示变化量；曲线在原坐标趋于 (0,1)'));
+    const paths=el('g',{'clip-path':'url(#chart-clip)'});
+    function path(s,kind){return s.values.map((v,i)=>`${i===0?'M':'L'}${X(v.x).toFixed(2)},${Y(coordinateY(s,v.x,kind)).toFixed(2)}`).join('');}
+    if(state.approximants){
+      const seen=new Set();
+      for(const s of data){
+        // x is shared by sine, tangent, logarithm and e^x−1; one common reference suffices.
+        const key=s.gLabel;
+        if(seen.has(key))continue;seen.add(key);
+        const neutral=s.gLabel==='x'&&(state.group==='all'||state.group==='trig');
+        paths.append(el('path',{d:path(s,'g'),fill:'none',stroke:neutral?'#526f65':colors[s.id],'stroke-width':3.6,'stroke-dasharray':'8 6',opacity:0.57,'data-kind':'approximant','data-series':s.id}));
+      }
+    }
+    if(state.functions){for(const s of data){paths.append(el('path',{d:path(s,'f'),fill:'none',stroke:colors[s.id],'stroke-width':2.15,'data-kind':'function','data-series':s.id}));}}
+    plot.append(paths);
+    const probeGroup=el('g',{'clip-path':'url(#chart-clip)'});
+    probeGroup.append(el('line',{x1:X(x),x2:X(x),y1:top,y2:bottom,stroke:'#698b7d','stroke-width':1,'stroke-dasharray':'3 5'}));
+    for(const s of series){
+      if(state.approximants)probeGroup.append(el('circle',{cx:X(x),cy:Y(coordinateY(s,x,'g')),r:4.5,fill:'#fff',stroke:colors[s.id],'stroke-width':1.5}));
+      if(state.functions)probeGroup.append(el('circle',{cx:X(x),cy:Y(coordinateY(s,x,'f')),r:2.8,fill:colors[s.id]}));
+    }
+    plot.append(probeGroup);
+    const labelX=Math.min(right-3,Math.max(left+3,X(x)));
+    plot.append(el('text',{x:labelX,y:top-10,'text-anchor':state.probe>.65?'end':state.probe<-.65?'start':'middle',class:'probe-label'},`x = ${fmt(x,4)}`));
+    const hit=el('rect',{x:left,y:top,width:right-left,height:bottom-top,fill:'transparent','data-chart-hit':'true'});
+    plot.append(hit);
+    updateText(series,r,x);
+  }
+  function updateText(series,r,x){
+    byId('x-display').textContent=`x = ${fmt(x,7)}`;
+    byId('probe-left').textContent='−'+fmt(r,3);
+    byId('probe-right').textContent='+'+fmt(r,3);
+    byId('domain').textContent=`[−${fmt(r,4)}, ${fmt(r,4)}]`;
+    byId('zoom-factor').textContent='× '+fmt(10**state.zoom,4);
+    byId('zoom').value=state.zoom;
+    byId('probe').value=state.probe*100;
+    byId('zoom-out').disabled=state.zoom<=0;
+    byId('zoom-in').disabled=state.zoom>=ZOOM_MAX;
+    byId('negative').setAttribute('aria-pressed',String(state.probe<0));
+    byId('zero').setAttribute('aria-pressed',String(state.probe===0));
+    byId('positive').setAttribute('aria-pressed',String(state.probe>0));
+    const tbody=byId('readouts');tbody.replaceChildren();
+    for(const s of series){
+      const tr=document.createElement('tr');
+      const valid=!s.invalid&&(x!==0||s.original);
+      const delta=valid?s.delta(x):NaN;
+      const name=document.createElement('td');
+      const wrapper=document.createElement('span');wrapper.className='row-name';
+      const dot=document.createElement('i');dot.className='dot';dot.style.setProperty('--series',colors[s.id]);
+      const label=document.createElement('span');label.className='math';label.textContent=s.label;
+      wrapper.append(dot,label);name.append(wrapper);
+      const ratio=document.createElement('td');ratio.className='ratio-value';ratio.textContent=ratioText(delta);
+      const error=document.createElement('td');error.className='error-value num';error.textContent=valid?fmt(Math.abs(delta),3):'—';
+      if(valid&&Math.abs(delta)>0&&Math.abs(delta)<5e-8)ratio.title=`1 ${delta<0?'−':'+'} ${fmt(Math.abs(delta),6)}`;
+      tr.append(name,ratio,error);tbody.append(tr);
+    }
+    const legend=byId('legend');legend.replaceChildren();
+    for(const s of series){
+      const item=document.createElement('span'),dot=document.createElement('i'),text=document.createElement('span');
+      dot.className='dot';dot.style.setProperty('--series',colors[s.id]);
+      text.className='math';text.textContent=state.group==='all'?s.label:s.formula;
+      item.append(dot,text);legend.append(item);
+    }
+    if(state.group==='trig'||state.group==='all'){
+      const item=document.createElement('span');item.innerHTML='<i class="sample dashed"></i><span class="math">共同参考线 y = x</span>';legend.append(item);
+    }
+    const details=byId('details');details.replaceChildren();
+    if(state.group!=='all'){
+      for(const s of series){
+        for(const [label,value] of [[s.label,s.f(x)],[s.gLabel,s.g(x)]]){
+          const line=document.createElement('div');line.className='value-line';
+          const a=document.createElement('span'),b=document.createElement('span');a.className='math';a.textContent=label;b.className='num';b.textContent=fmt(value,9);line.append(a,b);details.append(line);
+        }
+      }
+    }
+    const original=series.length===1&&series[0].original;
+    byId('limit-note').textContent=original?'原式在 x=0 的值均为 1，比值也为 1。注意：cos x 本身不趋于 0，它与 1−x²/2 的差为更高阶小量。':'无穷小组在 x=0 时比值为 0/0，不能直接代入；这里观察的是 x → 0 的过程。';
+    byId('status').textContent=!state.functions&&!state.approximants?'请勾选至少一类曲线。':state.zoom>=2?'视野已缩小 '+fmt(10**state.zoom,3)+' 倍。看起来重合时，可继续比较右侧的相对偏差。':'向 0 放大：同一组的实线与虚线会越来越贴合。';
+    const names={all:'全部函数 · 每一组与自己的等价式比较',trig:'三角函数 · x、sin x、tan x',cos:original?'余弦原式 · cos x 与 1 − x²/2':'余弦无穷小 · 1 − cos x 与 x²/2',log:'对数 · ln(1+x) 与 x',a:'指数 · aˣ − 1 与 (ln a)x',exp:'自然指数 · eˣ − 1 与 x',root:'根式 · ⁿ√(1+x) − 1 与 x/n',power:'一般幂函数 · (1+x)ᵅ − 1 与 αx'};
+    byId('chart-title').textContent=names[state.group];
+    let subtitle='实线是原函数，虚线是它对应的等价式。';
+    if(state.group==='all')subtitle='不同组的斜率可以不同，不要求所有曲线互相重合。';
+    if(state.group==='cos')subtitle=original?'原式趋于 1；为看清微小变化，纵轴显示 y − 1。':'cos x → 1；这里用 1 − cos x 观察趋于 0 的过程。';
+    if(state.group==='a')subtitle=`当前 a = ${fmt(state.base)}，参考直线斜率 ln a = ${fmt(Math.log(state.base))}。`;
+    if(state.group==='root')subtitle=`当前 n = ${state.degree}，参考直线斜率为 1/n。`;
+    if(state.group==='power')subtitle=`当前 α = ${fmt(state.alpha)}，参考直线斜率为 α。`;
+    byId('chart-subtitle').textContent=subtitle;
+    byId('cos-mode').hidden=state.group!=='cos';
+    const warning=[];
+    if(state.base===1)warning.push('a = 1 时，aˣ−1 与 (ln a)x 都恒为 0，比值无定义，不能作为这里的等价无穷小。');
+    if(state.alpha===0)warning.push('α = 0 时，(1+x)ᵅ−1 与 αx 都恒为 0，比值无定义。');
+    byId('warning').hidden=warning.length===0;byId('warning').textContent=warning.join(' ');
+  }
+  function stop(){
+    running=false;cancelAnimationFrame(animation);byId('play').textContent='自动靠近 0';byId('play').setAttribute('aria-pressed','false');
+  }
+  function setZoom(value, manual=true){
+    if(manual)stop();
+    state.zoom=Math.min(ZOOM_MAX,Math.max(0,value));requestDraw();
+  }
+  document.querySelectorAll('[data-group]').forEach(button=>button.addEventListener('click',()=>{
+    state.group=button.dataset.group;
+    document.querySelectorAll('[data-group]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));
+    requestDraw();byId('live').textContent=`已切换到${button.textContent.trim()}。`;
+  }));
+  byId('zoom').addEventListener('input',e=>setZoom(Number(e.target.value)));
+  byId('zoom-in').addEventListener('click',()=>setZoom(state.zoom+.35));
+  byId('zoom-out').addEventListener('click',()=>setZoom(state.zoom-.35));
+  byId('reset').addEventListener('click',()=>{setZoom(0);state.probe=.5;});
+  byId('probe').addEventListener('input',e=>{state.probe=Number(e.target.value)/100;requestDraw();});
+  byId('negative').addEventListener('click',()=>{state.probe=-Math.max(.1,Math.abs(state.probe));requestDraw();});
+  byId('positive').addEventListener('click',()=>{state.probe=Math.max(.1,Math.abs(state.probe));requestDraw();});
+  byId('zero').addEventListener('click',()=>{state.probe=0;requestDraw();});
+  for(const [id,key,min,max,integer] of [['base','base',.05,10,false],['degree','degree',1,20,true],['alpha','alpha',-3,3,false]]){
+    const input=byId(id);
+    input.addEventListener('input',()=>{
+      if(input.value.trim()==='')return;
+      const value=Number(input.value);
+      if(!Number.isFinite(value)||value<min||value>max||(integer&&!Number.isInteger(value))){input.setCustomValidity(integer?`请输入 ${min} 到 ${max} 的整数`:`请输入 ${min} 到 ${max} 的数`);return;}
+      input.setCustomValidity('');state[key]=value;requestDraw();
+    });
+    input.addEventListener('change',()=>{
+      if(!input.checkValidity()||input.value===''){input.value=state[key];input.setCustomValidity('');}
+    });
+  }
+  document.querySelectorAll('input[name="cos-mode"]').forEach(input=>input.addEventListener('change',()=>{state.cosMode=input.value;requestDraw();}));
+  byId('show-functions').addEventListener('change',e=>{state.functions=e.target.checked;requestDraw();});
+  byId('show-approximants').addEventListener('change',e=>{state.approximants=e.target.checked;requestDraw();});
+  plot.addEventListener('wheel',e=>{
+    e.preventDefault();
+    let delta=e.deltaY*(e.deltaMode===1?16:e.deltaMode===2?300:1);
+    delta=Math.min(150,Math.max(-150,delta));
+    setZoom(state.zoom-delta*.0025);
+  },{passive:false});
+  plot.addEventListener('keydown',e=>{
+    if(['+','=','ArrowUp'].includes(e.key)){e.preventDefault();setZoom(state.zoom+.2);}
+    if(['-','_','ArrowDown'].includes(e.key)){e.preventDefault();setZoom(state.zoom-.2);}
+    if(e.key==='0'){e.preventDefault();setZoom(0);}
+    if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();state.probe=Math.max(-1,Math.min(1,state.probe+(e.key==='ArrowLeft'?-.05:.05)));requestDraw();}
+  });
+  const pointers=new Map();let pinchDistance=0;
+  function distance(){const list=Array.from(pointers.values());return list.length<2?0:Math.hypot(list[0].x-list[1].x,list[0].y-list[1].y);}
+  function probeAt(clientX){
+    if(!chart)return;
+    const rect=plot.getBoundingClientRect();
+    const px=(clientX-rect.left)*chart.width/rect.width;
+    state.probe=Math.max(-1,Math.min(1,(px-chart.left)/(chart.right-chart.left)*2-1));
+    if(Math.abs(state.probe)<.008)state.probe=0;
+    requestDraw();
+  }
+  plot.addEventListener('pointerdown',e=>{
+    stop();plot.setPointerCapture(e.pointerId);pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
+    if(pointers.size===1)probeAt(e.clientX);else pinchDistance=distance();
+  });
+  plot.addEventListener('pointermove',e=>{
+    if(!pointers.has(e.pointerId))return;
+    pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
+    if(pointers.size>=2){const d=distance();if(pinchDistance>0&&d>0)setZoom(state.zoom+Math.log10(d/pinchDistance));pinchDistance=d;}
+    else probeAt(e.clientX);
+  });
+  function release(e){pointers.delete(e.pointerId);pinchDistance=0;}
+  plot.addEventListener('pointerup',release);plot.addEventListener('pointercancel',release);plot.addEventListener('lostpointercapture',release);
+  byId('play').addEventListener('click',()=>{
+    if(running){stop();return;}
+    if(state.zoom>=ZOOM_MAX)state.zoom=0;
+    if(state.probe===0)state.probe=.5;
+    running=true;byId('play').textContent='暂停';byId('play').setAttribute('aria-pressed','true');lastFrame=performance.now();
+    function tick(now){
+      if(!running)return;
+      const dt=Math.min(100,now-lastFrame);lastFrame=now;
+      state.zoom=Math.min(ZOOM_MAX,state.zoom+dt*.00032);render();
+      if(state.zoom>=ZOOM_MAX){stop();byId('live').textContent='已放大一万亿倍，函数与等价式越来越贴近。';return;}
+      animation=requestAnimationFrame(tick);
+    }
+    animation=requestAnimationFrame(tick);
+  });
+  document.addEventListener('visibilitychange',()=>{if(document.hidden&&running)stop();});
+  new ResizeObserver(requestDraw).observe(plot);
+  render();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,619 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f7f5">
+  <title>有限项变动，收敛性不变 | 数列极限互动演示</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #1b2928;
+      --muted: #687775;
+      --line: #dce5e1;
+      --paper: #ffffff;
+      --canvas: #f4f7f5;
+      --green: #087e6b;
+      --green-dark: #075b4e;
+      --green-pale: #e7f3ee;
+      --coral: #d06a50;
+      --gold: #b07a21;
+      --gold-pale: #fbf4e4;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--canvas);
+      color: var(--ink);
+      font-family: Inter, "Noto Sans SC", "Microsoft YaHei", sans-serif;
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    button { font: inherit; }
+
+    .topbar {
+      height: 62px;
+      background: rgba(255, 255, 255, .94);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .topbar-inner, main, footer {
+      width: min(1120px, calc(100% - 48px));
+      margin: 0 auto;
+    }
+
+    .topbar-inner {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand, .live-state, .eyebrow, .section-heading, .toolbar, .legend,
+    .result-label, .term-top, .tail-note {
+      display: flex;
+      align-items: center;
+    }
+
+    .brand { gap: 10px; font-weight: 700; font-size: 14px; }
+
+    .brand-mark {
+      display: grid;
+      width: 30px;
+      height: 30px;
+      place-items: center;
+      border-radius: 8px;
+      background: var(--green);
+      color: #fff;
+      font-family: Georgia, serif;
+      font-size: 19px;
+    }
+
+    .brand-sub { color: var(--muted); font-weight: 500; }
+    .live-state { gap: 8px; color: var(--muted); font-size: 12px; }
+
+    .live-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #399d75;
+      box-shadow: 0 0 0 3px #e6f4ed;
+    }
+
+    main { padding: 46px 0 52px; }
+    .intro { max-width: 780px; margin-bottom: 28px; }
+
+    .eyebrow {
+      gap: 8px;
+      margin-bottom: 12px;
+      color: var(--green-dark);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .eyebrow-mark { width: 18px; height: 1px; background: var(--green); }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(30px, 4vw, 43px);
+      line-height: 1.25;
+      font-weight: 750;
+    }
+
+    .intro-copy { max-width: 700px; margin: 12px 0 0; color: var(--muted); }
+
+    .theorem-line {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-top: 20px;
+      padding: 12px 16px;
+      border-left: 3px solid var(--green);
+      background: #edf4f0;
+      color: #42534f;
+    }
+
+    .theorem-line strong { color: var(--green-dark); font-weight: 700; }
+    .theorem-formula { flex: 0 0 auto; color: var(--ink); font-family: Georgia, serif; font-size: 17px; }
+
+    .result-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      min-height: 70px;
+      margin-bottom: 18px;
+      padding: 14px 20px;
+      border: 1px solid #c9e2d7;
+      border-radius: 8px;
+      background: var(--green-pale);
+    }
+
+    .result-label { gap: 12px; min-width: 0; }
+
+    .result-check {
+      display: grid;
+      flex: 0 0 auto;
+      width: 34px;
+      height: 34px;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--green);
+      color: #fff;
+      font-size: 17px;
+      font-weight: 700;
+    }
+
+    .result-title { color: var(--green-dark); font-size: 16px; font-weight: 750; }
+    .result-copy { color: #55736a; font-size: 13px; }
+
+    .deleted-counter {
+      flex: 0 0 auto;
+      padding: 5px 10px;
+      border: 1px solid #c9e2d7;
+      border-radius: 6px;
+      color: var(--green-dark);
+      background: rgba(255, 255, 255, .54);
+      font-size: 12px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: minmax(0, 1.65fr) minmax(260px, .85fr);
+      gap: 0;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--paper);
+    }
+
+    .visual-column { min-width: 0; padding: 23px 24px 22px; }
+
+    .proof-column {
+      padding: 24px 24px 22px;
+      border-left: 1px solid var(--line);
+      background: #fbfcfb;
+    }
+
+    .section-heading { justify-content: space-between; gap: 12px; }
+    .section-heading h2, .proof-column h2 { margin: 0; font-size: 16px; font-weight: 730; }
+
+    .sequence-formula {
+      color: var(--muted);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+    }
+
+    .chart-caption { margin: 4px 0 0; color: var(--muted); font-size: 12px; }
+
+    .chart-wrap {
+      margin-top: 14px;
+      border: 1px solid #e8eeeb;
+      border-radius: 6px;
+      background: #fff;
+    }
+
+    #sequence-chart { display: block; width: 100%; height: auto; }
+    .chart-grid { stroke: #e8eeeb; stroke-width: 1; }
+    .chart-axis { stroke: #85928f; stroke-width: 1.2; }
+    .chart-tick, .chart-axis-label { fill: #7b8986; font: 12px Inter, "Microsoft YaHei", sans-serif; }
+    .chart-axis-label { fill: #566662; font-size: 13px; }
+    .chart-area { fill: #e7f3ee; }
+    .chart-line { fill: none; stroke: var(--green); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+    .chart-dot { fill: #fff; stroke: var(--green); stroke-width: 2; }
+    .chart-dot.first { fill: var(--green); stroke: #fff; stroke-width: 2.5; }
+    .chart-limit { stroke: #d4a24e; stroke-width: 1.5; stroke-dasharray: 5 5; }
+    .chart-limit-label { fill: #9a6a19; font: 11px Inter, "Microsoft YaHei", sans-serif; }
+
+    .legend { flex-wrap: wrap; gap: 16px; margin-top: 11px; color: var(--muted); font-size: 12px; }
+    .legend-item { display: inline-flex; align-items: center; gap: 7px; }
+    .legend-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); }
+    .legend-limit { width: 15px; border-top: 2px dashed #d4a24e; }
+
+    .toolbar {
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 23px;
+      padding-top: 16px;
+      border-top: 1px solid var(--line);
+    }
+
+    .term-top { gap: 9px; }
+    .term-top strong { font-size: 14px; }
+    .term-count { color: var(--muted); font-size: 12px; }
+    .toolbar-actions { display: flex; gap: 8px; }
+
+    .control-button {
+      display: inline-flex;
+      min-height: 34px;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 5px 9px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      color: #455450;
+      font-size: 12px;
+      cursor: pointer;
+      transition: background .16s ease, border-color .16s ease, color .16s ease;
+    }
+
+    .control-button:hover:not(:disabled) { border-color: #a9c9bb; background: #f5faf7; color: var(--green-dark); }
+    .control-button:disabled { opacity: .45; cursor: not-allowed; }
+    .control-icon { font-size: 16px; line-height: 1; }
+
+    .term-grid {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 7px;
+      margin-top: 12px;
+    }
+
+    .term-button {
+      position: relative;
+      min-width: 0;
+      min-height: 62px;
+      padding: 8px 6px 7px;
+      border: 1px solid #e1e9e5;
+      border-radius: 6px;
+      background: #fff;
+      color: var(--ink);
+      text-align: center;
+      cursor: pointer;
+      transition: border-color .16s ease, background .16s ease, transform .16s ease;
+    }
+
+    .term-button:hover {
+      transform: translateY(-1px);
+      border-color: #dfa392;
+      background: #fffaf8;
+    }
+
+    .term-button:focus-visible, .control-button:focus-visible {
+      outline: 3px solid #81bfa9;
+      outline-offset: 2px;
+    }
+
+    .term-index { display: block; color: var(--muted); font-size: 10px; line-height: 1.2; }
+    .term-value { display: block; overflow: hidden; margin-top: 3px; font-family: Georgia, "Times New Roman", serif; font-size: 15px; text-overflow: ellipsis; white-space: nowrap; }
+
+    .term-remove {
+      position: absolute;
+      top: 3px;
+      right: 5px;
+      color: var(--coral);
+      font-family: Arial, sans-serif;
+      font-size: 13px;
+      opacity: 0;
+      transition: opacity .16s ease;
+    }
+
+    .term-button:hover .term-remove, .term-button:focus-visible .term-remove { opacity: 1; }
+
+    .tail-note {
+      gap: 8px;
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .tail-symbol { color: var(--gold); font-size: 14px; }
+    .proof-column h2 { margin-bottom: 16px; }
+    .proof-step { padding: 0 0 17px 15px; border-left: 1px solid #cfdbd6; }
+    .proof-step:last-of-type { padding-bottom: 0; border-left-color: transparent; }
+
+    .step-label {
+      position: relative;
+      margin-bottom: 5px;
+      color: var(--green-dark);
+      font-size: 11px;
+      font-weight: 750;
+    }
+
+    .step-label::before {
+      position: absolute;
+      top: 6px;
+      left: -19px;
+      width: 7px;
+      height: 7px;
+      border: 2px solid #fff;
+      border-radius: 50%;
+      background: #299477;
+      box-shadow: 0 0 0 1px #299477;
+      content: "";
+    }
+
+    .proof-text { margin: 0; color: #586763; font-size: 13px; line-height: 1.7; }
+    .proof-math { margin: 6px 0 0; color: var(--ink); font-family: Georgia, "Times New Roman", serif; font-size: 16px; }
+
+    .deleted-list {
+      min-height: 45px;
+      margin-top: 16px;
+      padding: 10px 11px;
+      border: 1px solid #efddd6;
+      border-radius: 6px;
+      background: #fffaf8;
+    }
+
+    .deleted-heading { color: #9d5944; font-size: 11px; font-weight: 700; }
+    .deleted-values { display: block; margin-top: 3px; color: #72544c; font-family: Georgia, serif; font-size: 13px; overflow-wrap: anywhere; }
+
+    .proof-conclusion {
+      margin-top: 18px;
+      padding: 11px 12px;
+      border-left: 3px solid #d6a54f;
+      background: var(--gold-pale);
+      color: #75551e;
+      font-size: 12px;
+    }
+
+    .proof-conclusion strong { color: #6d4b12; }
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 0 0 27px;
+      color: #81908b;
+      font-size: 11px;
+    }
+
+    @media (max-width: 840px) {
+      .workspace { grid-template-columns: minmax(0, 1fr); }
+      .proof-column { border-top: 1px solid var(--line); border-left: 0; }
+      .proof-column h2 { margin-bottom: 13px; }
+      .proof-column { display: grid; grid-template-columns: 1fr 1fr; column-gap: 22px; }
+      .proof-column > h2, .deleted-list, .proof-conclusion { grid-column: 1 / -1; }
+    }
+
+    @media (max-width: 560px) {
+      .topbar { height: 56px; }
+      .topbar-inner, main, footer { width: min(100% - 32px, 1120px); }
+      main { padding-top: 32px; padding-bottom: 35px; }
+      h1 { font-size: 31px; }
+      .intro-copy { font-size: 14px; }
+      .theorem-line { align-items: flex-start; flex-direction: column; gap: 3px; }
+      .result-bar { align-items: flex-start; padding: 12px; }
+      .result-label { align-items: flex-start; }
+      .result-title { font-size: 14px; }
+      .result-copy { font-size: 11px; }
+      .deleted-counter { padding: 4px 7px; font-size: 10px; }
+      .visual-column { padding: 18px 13px 17px; }
+      .section-heading h2 { font-size: 14px; }
+      .sequence-formula { font-size: 13px; }
+      .chart-caption { font-size: 11px; }
+      .toolbar { align-items: flex-start; flex-direction: column; }
+      .toolbar-actions { width: 100%; }
+      .control-button { flex: 1; }
+      .term-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
+      .term-button { min-height: 58px; }
+      .proof-column { display: block; padding: 20px 17px; }
+      .proof-column h2 { margin-bottom: 15px; }
+      footer { flex-direction: column; gap: 2px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">∑</span>
+        <span>高等数学 <span class="brand-sub">/ 数列极限</span></span>
+      </div>
+      <div class="live-state"><span class="live-dot" aria-hidden="true"></span><span>交互演示</span></div>
+    </div>
+  </header>
+
+  <main>
+    <section class="intro" aria-labelledby="page-title">
+      <div class="eyebrow"><span class="eyebrow-mark" aria-hidden="true"></span>极限的“尾部”决定收敛</div>
+      <h1 id="page-title">有限项被删去，收敛性会改变吗？</h1>
+      <p class="intro-copy">试着从一个收敛数列中删掉几项。观察剩下的项重新编号后，数列的整体趋势和极限有没有变化。</p>
+      <div class="theorem-line">
+        <span class="theorem-formula">a<sub>n</sub> = 1/n</span>
+        <span><strong>它收敛到 0。</strong>请点击下方任意一项将它删去。</span>
+      </div>
+    </section>
+
+    <section class="result-bar" aria-live="polite">
+      <div class="result-label">
+        <span class="result-check" aria-hidden="true">✓</span>
+        <div>
+          <div class="result-title">极限保持不变：仍然趋于 0</div>
+          <div class="result-copy" id="result-copy">数列有无穷多项；删去有限项后，后面的项仍不断靠近 0。</div>
+        </div>
+      </div>
+      <span class="deleted-counter" id="deleted-counter">已删 0 项</span>
+    </section>
+
+    <section class="workspace" aria-label="有限项删除互动演示">
+      <div class="visual-column">
+        <div class="section-heading">
+          <h2>删除并重新编号后的数列</h2>
+          <span class="sequence-formula">a′<sub>k</sub> = a<sub>mₖ</sub></span>
+        </div>
+        <p class="chart-caption" id="chart-caption">横轴是删后位置 k，纵轴是对应的数值 a′ₖ。</p>
+        <div class="chart-wrap">
+          <svg id="sequence-chart" viewBox="0 0 760 340" role="img" aria-label="数列一除以 n 的前二十四项图表"></svg>
+        </div>
+        <div class="legend" aria-label="图例">
+          <span class="legend-item"><span class="legend-dot" aria-hidden="true"></span>删后保留的项</span>
+          <span class="legend-item"><span class="legend-limit" aria-hidden="true"></span>极限位置 0</span>
+        </div>
+
+        <div class="toolbar">
+          <div class="term-top">
+            <strong>点选要删除的项</strong>
+            <span class="term-count" id="term-count">显示删后前 24 项</span>
+          </div>
+          <div class="toolbar-actions">
+            <button class="control-button" id="undo-button" type="button" disabled>
+              <span class="control-icon" aria-hidden="true">↶</span>撤销一步
+            </button>
+            <button class="control-button" id="reset-button" type="button" disabled>
+              <span class="control-icon" aria-hidden="true">↺</span>恢复初始
+            </button>
+          </div>
+        </div>
+        <div class="term-grid" id="term-grid" aria-label="可删除的数列项"></div>
+        <div class="tail-note"><span class="tail-symbol" aria-hidden="true">∞</span><span>删去一项后，后续项会自动补入；这里始终展示删后数列的前 24 项。</span></div>
+      </div>
+
+      <aside class="proof-column" aria-labelledby="proof-title">
+        <h2 id="proof-title">为什么极限不变？</h2>
+        <div class="proof-step">
+          <div class="step-label">01 · 看数列尾部</div>
+          <p class="proof-text">收敛描述的是 n 越来越大时的趋势。有限个开头项不会改变足够靠后的项。</p>
+          <p class="proof-math">lim<sub>n→∞</sub> 1/n = 0</p>
+        </div>
+        <div class="proof-step">
+          <div class="step-label">02 · 删除后重新编号</div>
+          <p class="proof-text">设删后第 k 项来自原数列第 mₖ 项。只删有限项时，mₖ 仍会趋于无穷。</p>
+          <p class="proof-math">a′<sub>k</sub> = 1/mₖ</p>
+        </div>
+        <div class="proof-step">
+          <div class="step-label">03 · 极限保持</div>
+          <p class="proof-text">当 mₖ 越来越大，1/mₖ 仍越来越接近 0。删掉的有限项不会改变极限。</p>
+          <p class="proof-math">lim<sub>k→∞</sub> a′<sub>k</sub> = 0</p>
+        </div>
+
+        <div class="deleted-list" aria-live="polite">
+          <span class="deleted-heading">本次删去的原数列项</span>
+          <span class="deleted-values" id="deleted-values">尚未删除任何项</span>
+        </div>
+        <div class="proof-conclusion"><strong>结论：</strong>只改变或删去有限项，数列的收敛性和极限值都不变。</div>
+      </aside>
+    </section>
+  </main>
+
+  <footer>
+    <span>数列极限 · 有限项的变化与极限</span>
+    <span>互动窗口展示有限项，数列本身仍有无穷多项。</span>
+  </footer>
+
+  <script>
+    (() => {
+      const visibleCount = 24;
+      const deleted = new Set();
+      const history = [];
+      const termGrid = document.getElementById("term-grid");
+      const chart = document.getElementById("sequence-chart");
+      const deletedValues = document.getElementById("deleted-values");
+      const deletedCounter = document.getElementById("deleted-counter");
+      const resultCopy = document.getElementById("result-copy");
+      const undoButton = document.getElementById("undo-button");
+      const resetButton = document.getElementById("reset-button");
+
+      function visibleTerms() {
+        const terms = [];
+        for (let original = 1; terms.length < visibleCount; original += 1) {
+          if (!deleted.has(original)) terms.push(original);
+        }
+        return terms;
+      }
+
+      function renderChart(terms) {
+        const left = 58;
+        const right = 730;
+        const top = 30;
+        const bottom = 284;
+        const maxValue = 1.05;
+        const x = (index) => left + (index / (visibleCount - 1)) * (right - left);
+        const y = (value) => bottom - (value / maxValue) * (bottom - top);
+        const tickValues = [0, 0.2, 0.4, 0.6, 0.8, 1.0];
+        const grid = tickValues.map((tick) => {
+          const yy = y(tick);
+          return `<line class="chart-grid" x1="${left}" y1="${yy}" x2="${right}" y2="${yy}"></line><text class="chart-tick" x="${left - 12}" y="${yy + 4}" text-anchor="end">${tick.toFixed(1)}</text>`;
+        }).join("");
+        const points = terms.map((original, index) => `${x(index).toFixed(1)},${y(1 / original).toFixed(1)}`);
+        const line = points.join(" ");
+        const area = `${left},${bottom} ${line} ${right},${bottom}`;
+        const dots = terms.map((original, index) => {
+          const klass = index === 0 ? "chart-dot first" : "chart-dot";
+          return `<circle class="${klass}" cx="${x(index)}" cy="${y(1 / original)}" r="${index === 0 ? 5 : 3.2}"><title>删后第 ${index + 1} 项：原第 ${original} 项，数值 ${formatValue(original)}</title></circle>`;
+        }).join("");
+        const xTicks = [0, 5, 11, 17, 23].map((index) => {
+          const xx = x(index);
+          return `<line class="chart-axis" x1="${xx}" y1="${bottom}" x2="${xx}" y2="${bottom + 5}"></line><text class="chart-tick" x="${xx}" y="${bottom + 22}" text-anchor="middle">${index + 1}</text>`;
+        }).join("");
+
+        chart.innerHTML = `
+          <title>删后数列前 ${visibleCount} 项，极限仍为 0</title>
+          <desc>横轴为删后项数，纵轴为数列项的值。删除项后曲线会更新，但仍趋近于横轴上的 0。</desc>
+          ${grid}
+          <line class="chart-limit" x1="${left}" y1="${bottom}" x2="${right}" y2="${bottom}"></line>
+          <text class="chart-limit-label" x="${right - 2}" y="${bottom - 9}" text-anchor="end">极限 0</text>
+          <polygon class="chart-area" points="${area}"></polygon>
+          <polyline class="chart-line" points="${line}"></polyline>
+          ${dots}
+          <line class="chart-axis" x1="${left}" y1="${top}" x2="${left}" y2="${bottom}"></line>
+          <line class="chart-axis" x1="${left}" y1="${bottom}" x2="${right}" y2="${bottom}"></line>
+          ${xTicks}
+          <text class="chart-axis-label" x="${(left + right) / 2}" y="330" text-anchor="middle">删后位置 k</text>
+          <text class="chart-axis-label" x="17" y="${(top + bottom) / 2}" text-anchor="middle" transform="rotate(-90 17 ${(top + bottom) / 2})">数值 a′ₖ</text>
+        `;
+      }
+
+      function formatValue(original) {
+        return original === 1 ? "1" : `1/${original}`;
+      }
+
+      function render() {
+        const terms = visibleTerms();
+        termGrid.innerHTML = terms.map((original, index) => `
+          <button class="term-button" type="button" data-original="${original}" aria-label="删除删后第 ${index + 1} 项，原数列第 ${original} 项，数值 ${formatValue(original)}" title="点击删除这一项">
+            <span class="term-index">第 ${index + 1} 项</span>
+            <span class="term-value">${formatValue(original)}</span>
+            <span class="term-remove" aria-hidden="true">×</span>
+          </button>
+        `).join("");
+        renderChart(terms);
+
+        const count = deleted.size;
+        deletedCounter.textContent = `已删 ${count} 项`;
+        deletedValues.textContent = count
+          ? [...deleted].sort((a, b) => a - b).map((n) => `a${n} = 1/${n}`).join("、")
+          : "尚未删除任何项";
+        resultCopy.textContent = count
+          ? `你删去了 ${count} 项；后续无穷多项仍然趋近于 0。`
+          : "数列有无穷多项；删去有限项后，后面的项仍不断靠近 0。";
+        undoButton.disabled = history.length === 0;
+        resetButton.disabled = count === 0;
+      }
+
+      termGrid.addEventListener("click", (event) => {
+        const button = event.target.closest("button[data-original]");
+        if (!button) return;
+        history.push(new Set(deleted));
+        deleted.add(Number(button.dataset.original));
+        render();
+      });
+
+      undoButton.addEventListener("click", () => {
+        const previous = history.pop();
+        if (!previous) return;
+        deleted.clear();
+        previous.forEach((original) => deleted.add(original));
+        render();
+      });
+
+      resetButton.addEventListener("click", () => {
+        deleted.clear();
+        history.length = 0;
+        render();
+      });
+
+      render();
+    })();
+  </script>
+</body>
+</html>
