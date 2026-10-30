@@ -1,0 +1,3 @@
+# Preserve PDF and PowerPoint files byte for byte.
+*.pdf binary
+*.pptx binary
