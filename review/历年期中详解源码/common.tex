@@ -1,0 +1,36 @@
+% !TeX program = xelatex
+\documentclass[UTF8,11pt,a4paper,fontset=windows]{ctexart}
+\usepackage[top=19mm,bottom=19mm,left=21mm,right=21mm,headheight=16pt,headsep=6mm,footskip=9mm]{geometry}
+\usepackage{amsmath,amssymb,mathtools,booktabs,array,enumitem,needspace,graphicx,xcolor,fancyhdr,lastpage}
+\usepackage[hidelinks]{hyperref}
+\definecolor{ink}{HTML}{173F5F}
+\definecolor{accent}{HTML}{227C83}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+\linespread{1.12}
+\setlength{\abovedisplayskip}{7pt}
+\setlength{\belowdisplayskip}{7pt}
+\emergencystretch=2em
+\setlist{nosep,leftmargin=2em,topsep=3pt}
+\newcommand{\ee}{\mathrm e}
+\newcommand{\dd}{\,\mathrm d}
+\newcommand{\R}{\mathbb R}
+\newcommand{\ans}[1]{\boxed{#1}}
+\newcommand{\q}[2]{\par\medskip\Needspace{5\baselineskip}\noindent{\large\bfseries\color{ink}第 #1 题\quad #2}\par\smallskip}
+\newcommand{\tip}[1]{\par{\small\color{accent}\textbf{提示：}#1}\par}
+\newcommand{\startpaper}[3]{%
+\def\paperyear{#1}%
+\hypersetup{pdftitle={#1学年高等数学I期中考试参考答案与详解},pdfauthor={学习资料整理}}%
+\begin{center}
+{\LARGE\bfseries\color{ink}高等数学 I 期中考试}\\[5pt]
+{\Large #1 学年\quad 参考答案与详解}\\[6pt]
+{\small 上海科技大学原卷\quad 满分 #2 分\quad #3 题\quad 整理：2026-11-10}
+\end{center}
+\textbf{使用说明：}题号与仓库原卷一致，题意作简要复述；解答独立编写，供学习核对，不是校方标准答案。所有角度均用弧度。
+}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small 高等数学 I · 历年期中详解}
+\fancyhead[R]{\small\paperyear 学年}
+\fancyfoot[C]{\small 第 \thepage\ 页\quad 共 \pageref{LastPage}\ 页}
+\renewcommand{\headrulewidth}{0.35pt}
+\raggedbottom

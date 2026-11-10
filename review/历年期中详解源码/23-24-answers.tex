@@ -1,0 +1,274 @@
+\input{common.tex}
+\begin{document}
+\startpaper{2023--2024}{110}{17}
+\textbf{本次复习范围：}学到洛必达法则时，\textbf{第 16 题（泰勒公式）暂时跳过}；其余题可做。第 5 题要严格按“有上界”的原文判断。
+
+\textbf{选择、填空速查}
+\begin{center}
+\begin{tabular}{c*{5}{c}}
+\toprule 题号 & 1 & 2 & 3 & 4 & 5\\\midrule
+答案 & B & D & A & D & B\\\bottomrule
+\end{tabular}\qquad
+\begin{tabular}{cl}
+\toprule 题号 & 答案\\\midrule
+6 & $3/2$\\
+7 & $2$ 个\\
+8 & $\dd x$\\
+9 & $-5/2$\\
+10 & $y-1=-10(x-2)$\\\bottomrule
+\end{tabular}
+\end{center}
+\tip{按各大题分值相加，2023 年原卷也是 110 分：$20+20+8+16+16+10+10=110$。}
+
+\q{1}{复合函数：B}
+因 $f(x)=|x|\ge0$，故
+\[
+g(f(x))=\operatorname{sgn}|x|=\begin{cases}1,&x\ne0,\\0,&x=0.\end{cases}
+\]
+
+\q{2}{夹逼与可导性：D}
+由 $x+\cos x\le f(x)\le x+1$，取 $x=0$ 得 $f(0)=1$。又
+\[
+|f(x)-1-x|\le1-\cos x,
+\qquad
+\left|\frac{f(x)-f(0)}x-1\right|\le\frac{1-\cos x}{|x|}\longrightarrow0.
+\]
+因此 $f'(0)=1$，选 D。用绝对值估计可避免 $x<0$ 时不等号方向的问题。
+
+\q{3}{参数曲线的切线：A}
+$t=0$ 时 $(x,y)=(1,-2)$，且
+\[
+\frac{\dd y}{\dd x}=\frac{\cos t+2\sin t}{2\cos t-\sin t},\qquad
+\left.\frac{\dd y}{\dd x}\right|_{t=0}=\frac12.
+\]
+故切线为 $y+2=\frac12(x-1)$，即 $\ans{y=\frac12x-\frac52}$。
+
+\q{4}{充分必要条件：D}
+“有界”不充分：$f(x)=\sin x$ 在 $\R$ 上有界，但 $f'(x)=\cos x$ 在无穷远处无极限。
+“有界”也不必要：$f(x)=x$ 无界，而 $f'(x)\equiv1$ 有极限。故两者既非充分又非必要。
+
+\newpage
+\q{5}{递推数列的两个判断：B（均错误）}
+\textbf{判断 (1) 的反例。}取 $f(x)=-\ee^{-x}$。它在 $\R$ 上连续、严格增加，而且有上界 $0$。
+利用 $\ee^u\ge1+u$，有
+\[
+a_{n+1}=-\ee^{-a_n}\le a_n-1,
+\qquad a_n\le a_1-(n-1)\longrightarrow-\infty.
+\]
+故该数列并不收敛于有限实数，判断 (1) 错误。
+
+\textbf{判断 (2) 的反例。}取
+\[
+f(x)=-\frac4\pi\arctan x,\qquad a_1=1.
+\]
+此函数在 $\R$ 上连续、严格减少，且值域为 $(-2,2)$，但 $f(1)=-1$、$f(-1)=1$，所以
+\[
+a_1=1,\quad a_2=-1,\quad a_3=1,\quad a_4=-1,\quad\ldots
+\]
+数列不收敛，判断 (2) 也错误。
+\tip{严格增加的迭代会保持首步的增减方向；若迭代数列向下走，仅知道函数“有上界”不能提供所需的下界。若把题目改成“函数有界”，判断 (1) 才成立。}
+
+\q{6}{和式极限：$3/2$}
+记 $S_n=\sum_{k=1}^n\frac{n+k}{n^2+k}$。分母满足 $n^2+1\le n^2+k\le n^2+n$，而
+\[
+\sum_{k=1}^n(n+k)=n^2+\frac{n(n+1)}2=\frac{3n^2+n}2.
+\]
+于是
+\[
+\frac{3n^2+n}{2(n^2+n)}\le S_n\le\frac{3n^2+n}{2(n^2+1)}.
+\]
+两端均趋于 $3/2$，夹逼得 $\ans{\lim S_n=3/2}$。
+
+\q{7}{第二类间断点：$2$ 个}
+题中函数为
+\[
+f(x)=\frac{\ln|x|}{x-2}\sin\frac1{x-1}.
+\]
+只需检查 $x=0,1,2$，其余各点连续。
+\begin{itemize}
+\item $x\to0$ 时，$\sin\frac1{x-1}\to-\sin1\ne0$，且 $x-2\to-2$、$\ln|x|\to-\infty$，故 $f(x)\to-\infty$，为第二类间断点。
+\item $x\to1$ 时，$\frac{\ln|x|}{x-2}\to0$，正弦因子有界，故乘积趋于 $0$，是可去间断点。
+\item $x\to2$ 时，分子与正弦因子的乘积趋于 $\ln2\sin1\ne0$，分母趋于 $0$，是第二类间断点。
+\end{itemize}
+因此答案为 $\ans{2}$。振荡因子乘上趋于零的系数后，乘积可以存在极限。
+
+\newpage
+\q{8}{幂指函数的微分：$\dd x$}
+$f(x)=x^{\sin x}$（$x>0$）。对数求导得
+\[
+f'(x)=x^{\sin x}\left(\cos x\ln x+\frac{\sin x}{x}\right).
+\]
+代入 $x=\pi/2$ 得 $f'(\pi/2)=1$，故 $\ans{\left.\dd f\right|_{x=\pi/2}=\dd x}$。
+\tip{问的是微分，结果中应保留 $\dd x$；不能只填导数值 $1$。}
+
+\q{9}{隐函数求导：$-5/2$}
+原式为 $y=-y\ee^x+2\ee^y\sin x-7x$。取 $x=0$，得 $y(0)=0$。
+两边对 $x$ 求导：
+\[
+y'=-y'\ee^x-y\ee^x+2\ee^y y'\sin x+2\ee^y\cos x-7.
+\]
+代入 $(x,y)=(0,0)$ 得 $y'=-y'+2-7$，所以 $\ans{y'(0)=-5/2}$。
+
+\q{10}{法线：$y-1=-10(x-2)$}
+曲线为 $x=y^4+2y^3-1$。在 $y=1$ 处
+\[
+\frac{\dd x}{\dd y}=4y^3+6y^2=10,\qquad
+\frac{\dd y}{\dd x}=\frac1{10}.
+\]
+法线斜率为 $-10$，故 $\ans{y-1=-10(x-2)}$，亦可写成 $10x+y-21=0$。
+
+\q{11}{用定义证明无穷远处的极限}
+要证
+\[
+\lim_{x\to\infty}\frac{2x^2}{x^2-x+1}=2.
+\]
+对任意 $\varepsilon>0$，取 $M=\max\{2,6/\varepsilon\}$。当 $|x|>M$ 时，因
+\[
+x^2-x+1\ge x^2-|x|+1\ge\frac{x^2}2,
+\qquad |x-1|\le|x|+1\le\frac32|x|,
+\]
+可得
+\[
+\left|\frac{2x^2}{x^2-x+1}-2\right|
+=\frac{2|x-1|}{x^2-x+1}\le\frac6{|x|}<\frac6M\le\varepsilon.
+\]
+这正是无穷远处极限的定义，故得证。
+\tip{该证明同时覆盖 $x\to+\infty$ 与 $x\to-\infty$。若只按 $x\to+\infty$ 解读，直接保留正方向的估计即可。}
+
+\newpage
+\q{12}{幂指极限：$\ee^{-1/2}$}
+设 $L(x)=\left(\frac{\ln(1+x)}x\right)^{1/(\ee^x-1)}$。在 $0$ 的去心邻域内底数为正且趋于 $1$。
+令 $u(x)=\ln(1+x)/x$，取对数并分解：
+\[
+\ln L(x)=\frac{\ln u(x)}{u(x)-1}\,
+\frac{\ln(1+x)-x}{x^2}\,
+\frac{x}{\ee^x-1}.
+\]
+第一、三个因子均趋于 $1$；对中间因子使用洛必达法则：
+\[
+\lim_{x\to0}\frac{\ln(1+x)-x}{x^2}
+=\lim_{x\to0}\frac{1/(1+x)-1}{2x}
+=\lim_{x\to0}-\frac1{2(1+x)}=-\frac12.
+\]
+故 $\ln L(x)\to-1/2$，从而 $\ans{\lim_{x\to0}L(x)=\ee^{-1/2}}$。全过程不需要泰勒展开。
+
+\q{13}{递推数列：按初值分类}
+原递推为 $a_{n+1}=(a_n+a_n^3)/2$，$a_1\in(0,1]$。
+若 $a_1=1$，则各项均为 $1$，极限为 $1$。
+
+若 $0<a_1<1$，由归纳法可得 $0<a_n<1$，且
+\[
+a_{n+1}-a_n=\frac{a_n(a_n^2-1)}2<0.
+\]
+故数列严格递减、以下界 $0$ 有界，存在极限 $\ell\in[0,a_1]$。递推式两边取极限：
+\[
+\ell=\frac{\ell+\ell^3}2\quad\Longrightarrow\quad\ell(\ell^2-1)=0.
+\]
+因 $0\le\ell\le a_1<1$，只能有 $\ell=0$。综上
+\[
+\ans{\lim_{n\to\infty}a_n=\begin{cases}0,&0<a_1<1,\\1,&a_1=1.\end{cases}}
+\]
+
+\q{14}{分段函数的导数}
+题中 $f(x)=\ln(1+x^2)$（$x\le0$），$f(x)=x^2\sin(1/x)$（$x>0$）。
+在分段点必须先用定义：$f(0)=0$，
+\[
+f'_-(0)=\lim_{h\to0^-}\frac{\ln(1+h^2)}h=0,\qquad
+f'_+(0)=\lim_{h\to0^+}h\sin\frac1h=0.
+\]
+因此
+\[
+\ans{f'(x)=\begin{cases}
+\dfrac{2x}{1+x^2},&x<0,\\[3pt]
+0,&x=0,\\[3pt]
+2x\sin\dfrac1x-\cos\dfrac1x,&x>0.
+\end{cases}}
+\]
+虽然 $f'(0)$ 存在，但 $f'(x)$ 在 $0$ 处不连续。
+
+\newpage
+\q{15}{莱布尼茨公式与高阶导数}
+$f(x)=(x+1)^2\ln x$。先处理不能直接套用 $n\ge3$ 公式的两种情形：
+\begin{align*}
+f'(x)&=2(x+1)\ln x+\frac{(x+1)^2}x,\\
+f''(x)&=2\ln x+\frac{4(x+1)}x-\frac{(x+1)^2}{x^2}.
+\end{align*}
+故 $f'(2)=6\ln2+9/2$，$f''(2)=2\ln2+15/4$。
+
+当 $n\ge3$ 时，因二次多项式的三阶及以上导数为零，莱布尼茨公式仅剩三项：
+\begin{align*}
+f^{(n)}(x)={}&(x+1)^2\frac{(-1)^{n-1}(n-1)!}{x^n}\\
+&+2n(x+1)\frac{(-1)^{n-2}(n-2)!}{x^{n-1}}\\
+&+n(n-1)\frac{(-1)^{n-3}(n-3)!}{x^{n-2}}.
+\end{align*}
+代入 $x=2$ 并提取公因子，括号内为
+\[
+9(n-1)(n-2)-12n(n-2)+4n(n-1)=n^2-7n+18.
+\]
+最终
+\[
+\ans{f^{(n)}(2)=\begin{cases}
+6\ln2+\dfrac92,&n=1,\\[3pt]
+2\ln2+\dfrac{15}4,&n=2,\\[3pt]
+\dfrac{(-1)^{n-3}(n-3)!}{2^n}(n^2-7n+18),&n\ge3.
+\end{cases}}
+\]
+
+\q{16}{麦克劳林公式（本次范围外，可跳过）}
+\textbf{(1)} 对固定的 $\alpha\in\R$、正整数 $n$，当 $x\to0$ 时
+\[
+\ans{(1+x)^\alpha=1+\sum_{k=1}^{n}
+\frac{\alpha(\alpha-1)\cdots(\alpha-k+1)}{k!}x^k+o(x^n).}
+\]
+这里取 $0$ 附近满足 $1+x>0$ 的邻域。
+
+\textbf{(2)} 先写 $\sin x=x-x^3/6+o(x^3)$，再使用
+$(1+t)^{1/2}=1+t/2-t^2/8+t^3/16+o(t^3)$。于是
+\begin{align*}
+\sqrt{1+\sin x}
+&=1+\frac12\left(x-\frac{x^3}6\right)-\frac18x^2+\frac1{16}x^3+o(x^3)\\
+&=\ans{1+\frac x2-\frac{x^2}8-\frac{x^3}{48}+o(x^3)}.
+\end{align*}
+
+\newpage
+\q{17}{可去间断点与中值定理}
+已知
+\[
+g(x)=\begin{cases}\dfrac{\sin\pi x}{x(x-1)},&x\ne0,1,\\[4pt]2,&x=0,1.
+\end{cases}
+\]
+\textbf{(1) 两处极限。}利用 $\sin t/t\to1$，有
+\[
+\lim_{x\to0}g(x)
+=\lim_{x\to0}\frac{\sin\pi x}{x}\frac1{x-1}=-\pi.
+\]
+在 $x=1$ 处令 $h=x-1$，则
+\[
+\lim_{x\to1}g(x)
+=\lim_{h\to0}\frac{-\sin\pi h}{h(1+h)}=-\pi.
+\]
+两处极限都存在，但均不等于所给函数值 $2$，因此 $0,1$ 都是可去间断点。
+
+\textbf{(2) 从乘积连续提取端点条件。}因为 $f$ 在 $\R$ 上可导，所以连续。在 $x=0$ 处，乘积连续给出
+\[
+2f(0)=f(0)g(0)=\lim_{x\to0}f(x)g(x)=-\pi f(0),
+\]
+故 $f(0)=0$。同理 $f(1)=0$。
+
+构造 $F(x)=x\ee^{f(x)}$。它在 $[0,1]$ 上连续、在 $(0,1)$ 上可导，且
+\[
+F(0)=0,\qquad F(1)=1.
+\]
+由拉格朗日中值定理，存在 $\xi\in(0,1)$ 使
+\[
+F'(\xi)=\frac{F(1)-F(0)}{1-0}=1.
+\]
+而 $F'(x)=\ee^{f(x)}\bigl(1+xf'(x)\bigr)$，因此
+\[
+\ee^{f(\xi)}\bigl(1+\xi f'(\xi)\bigr)=1
+\quad\Longrightarrow\quad
+\ans{1+\xi f'(\xi)=\ee^{-f(\xi)}}.
+\]
+这还得到比原题“$\xi\in\R$”更强的定位 $\xi\in(0,1)$。
+\tip{关键顺序是：乘积连续 $\Rightarrow f(0)=f(1)=0$；再把目标等式识别为 $x\ee^{f(x)}$ 的导数等于 $1$。不需要泰勒展开。}
+\end{document}
