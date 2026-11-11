@@ -1,0 +1,357 @@
+\input{common.tex}
+\renewcommand{\solutiondate}{2026-11-11}
+\begin{document}
+\startpaper{2025--2026}{100}{17}
+\textbf{本次复习范围：}本卷全部题目均可用“极限、连续、求导、微分中值定理及洛必达法则”以内的知识解决，\textbf{没有必须因泰勒公式或凹凸性而跳过的整题}。第 3 题补充双曲函数定义；第 12 题使用高阶乘积求导；第 17 题较综合，可作为提高题。
+
+\textbf{原卷说明：}附件为扫描件，共 10 个 PDF 页面（封面 1 页、正文 9 页）；分值合计 $24+24+20+20+12=100$。第 14 题底数的读法与参数分类、第 16 题递推起始下标、第 17 题迭代次数的记号，均在对应解答中注明。
+
+\textbf{选择、填空速查}
+\begin{center}
+\begin{tabular}{c*{6}{c}}
+\toprule 题号 & 1 & 2 & 3 & 4 & 5 & 6\\\midrule
+答案 & D & D & A & D & C & A\\\bottomrule
+\end{tabular}\qquad
+\begin{tabular}{cl}
+\toprule 题号 & 答案\\\midrule
+7 & $-1/2$\\
+8 & $\ee^{-2}$\\
+9 & $1$\\
+10 & $1$\\
+11 & $y=-2x$\\
+12 & $23040$\\\bottomrule
+\end{tabular}
+\end{center}
+\tip{第 4 题按原卷 $x\to\infty$ 表示双侧无穷远（$|x|\to\infty$）理解；若只给 $x\to+\infty$ 的信息，则不足以确定 $g$ 的左极限。详见第 4 题。}
+
+\q{1}{左右极限：D}
+$f(x)=\arctan(x+1/x)$。当 $x\to0^+$ 时，$x+1/x\to+\infty$；当 $x\to0^-$ 时，$x+1/x\to-\infty$。因此
+\[
+\ans{\lim_{x\to0^-}f(x)=-\frac\pi2,\qquad
+\lim_{x\to0^+}f(x)=\frac\pi2.}
+\]
+左右极限均存在但不相等，故选 D，$x=0$ 为跳跃间断点。
+
+\q{2}{实数集的下确界：D}
+原集合为 $E=\{x^2\ee^{-x}+1/x:x>0\}$。每个元素均为正，所以 $0$ 是下界。又由洛必达法则
+\[
+\lim_{x\to+\infty}\frac{x^2}{\ee^x}
+=\lim_{x\to+\infty}\frac{2x}{\ee^x}
+=\lim_{x\to+\infty}\frac2{\ee^x}=0,
+\]
+故 $x^2\ee^{-x}+1/x\to0$。这说明集合元素可任意接近 $0$，所以 $\ans{\inf E=0}$，且下确界不被取到。
+另一方面，$x\to0^+$ 时 $1/x\to+\infty$，故 $E$ 无上界，A、B 都不成立。
+
+\newpage
+\q{3}{双曲函数与复合求导：A}
+题中 $f(x)=\arctan(\sinh x)+\operatorname{arccot}(\cosh x)$，反余切取值于 $(0,\pi)$。
+若尚未学双曲函数，只需代入定义
+\[
+\sinh x=\frac{\ee^x-\ee^{-x}}2,\quad
+\cosh x=\frac{\ee^x+\ee^{-x}}2.
+\]
+于是 $(\sinh x)'=\cosh x$、$(\cosh x)'=\sinh x$，并且
+$\cosh^2x-\sinh^2x=1$、$\cosh x>0$、$\cosh x-\sinh x=\ee^{-x}$。
+链式求导得
+\begin{align*}
+f'(x)
+&=\frac{\cosh x}{1+\sinh^2x}-\frac{\sinh x}{1+\cosh^2x}\\
+&=\frac{1+\cosh^2x-\sinh x\cosh x}{\cosh x(1+\cosh^2x)}
+=\frac{1+\cosh x\,\ee^{-x}}{\cosh x(1+\cosh^2x)}>0.
+\end{align*}
+因此 $f$ 处处可导且导数恒正，选 A。
+
+\q{4}{无穷远极限与倒数换元：D}
+已知 $\lim_{x\to\infty}f(x)=a$，且
+\[
+g(x)=\begin{cases}f(1/x),&x\ne0,\\0,&x=0.\end{cases}
+\]
+按双侧无穷远的含义，$x\to0$ 时 $|1/x|\to\infty$，所以 $\lim_{x\to0}g(x)=a$。
+与 $g(0)=0$ 比较可知
+\[
+\ans{\begin{cases}a=0:&g\text{ 在 }0\text{ 处连续},\\a\ne0:&0\text{ 是 }g\text{ 的可去间断点}.\end{cases}}
+\]
+连续性取决于 $a$ 的取值，故 D 正确。
+\tip{如果某教材把 $x\to\infty$ 仅用于 $x\to+\infty$，则只能推出 $g(0^+)=a$，还需补充 $f(-\infty)=a$ 才能作上述判断；不能凭正无穷处的信息直接断言左极限。}
+
+\q{5}{指定切线斜率的点数：C（$3$ 个）}
+参数曲线为 $x=(1-\cos t)\cos t$、$y=(1-\cos t)\sin t$，$0<t<2\pi$。
+求导并使用半角、三倍角恒等式：
+\begin{align*}
+x'(t)&=\sin t(2\cos t-1)=2\sin\frac t2\cos\frac{3t}2,\\
+y'(t)&=\cos t-\cos2t=2\sin\frac t2\sin\frac{3t}2.
+\end{align*}
+在该参数范围内 $\sin(t/2)>0$，所以速度向量不为零。切线有有限斜率时
+\[
+\frac{\dd y}{\dd x}=\tan\frac{3t}2.
+\]
+令 $\theta=\arctan\sqrt5\in(0,\pi/2)$，则斜率等于 $\sqrt5$ 对应
+\[
+\frac{3t}2=\theta+k\pi,\qquad k=0,1,2.
+\]
+恰有三个参数值。又 $1-\cos t>0$，点的极角就是 $t$；在 $(0,2\pi)$ 内不同极角对应不同点。因此恰有三个点，选 C。
+
+\newpage
+\q{6}{辨析四个命题：A}
+\textbf{A 正确。}对正整数 $\alpha$，二项式定理给出
+\[
+(1+x)^\alpha=1+\alpha x+\sum_{k=2}^\alpha\binom\alpha kx^k\ge1+\alpha x
+\quad(x>0).
+\]
+$\alpha=1$ 时等号成立；$\alpha\ge2$ 时余下各项为正。这是有限的二项式恒等式，不涉及泰勒公式。
+
+\textbf{B 错误。}极限 $\lim_{h\to0}\frac{f(x+2h)-f(x-3h)}h=5$ 没有用到中心点的函数值。取
+\[
+f(t)=\begin{cases}t,&t\ne1,\\2,&t=1.\end{cases}
+\]
+对每个固定 $x$，当非零 $h$ 足够小时，两采样点都不是 $1$，故该差商恒等于 $5$。
+但是 $f$ 在 $1$ 处不连续，当然不可导。因此即使所给极限对每个 $x$ 都成立，也不能推出题中结论。
+
+\textbf{C 错误。}可导不保证导函数连续。反例是
+\[
+f(t)=\begin{cases}t^2\sin(1/t),&t\ne0,\\0,&t=0.\end{cases}
+\]
+有 $f'(0)=0$，而 $t\ne0$ 时 $f'(t)=2t\sin(1/t)-\cos(1/t)$ 在 $0$ 附近振荡，极限不存在。
+
+\textbf{D 错误。}反函数的三阶导数并非原函数三阶导数的倒数。取 $f(x)=x+x^3$：它在 $(-1,1)$ 严格递增、三阶可导，且 $f(0)=0$、$f'''(0)=6$。
+记反函数为 $h$，则 $h(y)+h(y)^3=y$。依次求导：
+\begin{align*}
+(1+3h^2)h'&=1,\\
+6h(h')^2+(1+3h^2)h''&=0,\\
+6(h')^3+18hh'h''+(1+3h^2)h'''&=0.
+\end{align*}
+代入 $y=0$，得到 $h(0)=0$、$h'(0)=1$、$h''(0)=0$、$h'''(0)=-6\ne1/6$。因此选 A。
+
+\q{7}{导数定义与换元：$-1/2$}
+已知 $f'(0)=2$。令 $u=-x$，则
+\[
+\lim_{x\to0}\frac{f(-x)-f(0)}{4x}
+=-\frac14\lim_{u\to0}\frac{f(u)-f(0)}u
+=-\frac14 f'(0)=\ans{-\frac12}.
+\]
+
+\q{8}{幂指极限：$\ee^{-2}$}
+记 $L(x)=(\cos(2/x))^{x^2}$。对充分大的 $x$，底数为正且趋于 $1$，可以取对数。
+令 $u=2/x$，则
+\[
+\ln L(x)=4\frac{\ln\cos u}{u^2}\longrightarrow
+4\lim_{u\to0}\frac{-\tan u}{2u}=-2.
+\]
+这里使用一次洛必达法则和 $\tan u/u\to1$。因此 $\ans{\lim_{x\to\infty}L(x)=\ee^{-2}}$，不需要展开。
+
+\newpage
+\q{9}{调和和式的平均值极限：$1$}
+令 $H_n=\sum_{k=1}^n1/k$，则
+\[
+\frac1n\left(\frac21+\frac32+\cdots+\frac{n+1}n\right)=1+\frac{H_n}n.
+\]
+不使用积分或调和数的渐近公式：固定正整数 $m$，当 $n>m$ 时，
+\[
+0\le\frac{H_n}n
+\le\frac{H_m}n+\frac{n-m}{n(m+1)}
+\le\frac{H_m}n+\frac1{m+1}.
+\]
+任给 $\varepsilon>0$，先取 $m$ 使 $1/(m+1)<\varepsilon/2$，再令 $n$ 足够大使 $H_m/n<\varepsilon/2$，即得 $H_n/n\to0$。故答案为 $\ans{1}$。
+
+\q{10}{和式夹逼：$1$}
+记 $S_n=\sum_{k=1}^n\frac{n+\sin k}{n^2+n+k}$。因 $-1\le\sin k\le1$，且
+$n^2+n+1\le n^2+n+k\le n^2+2n$，对 $n\ge2$ 有
+\[
+\frac{n(n-1)}{n^2+2n}\le S_n\le\frac{n(n+1)}{n^2+n+1}.
+\]
+左右两端都趋于 $1$，所以 $\ans{\lim_{n\to+\infty}S_n=1}$。
+\tip{无需计算 $\sin1+\cdots+\sin n$，有界性已足够。}
+
+\q{11}{隐曲线的切线：$y=-2x$}
+原方程为 $\tan(x+y+\pi/4)=\ee^y$。在 $(0,0)$ 处等式成立。对 $x$ 求导：
+\[
+\sec^2\left(x+y+\frac\pi4\right)(1+y')=\ee^y y'.
+\]
+代入 $(0,0)$ 得 $2(1+y')=y'$，故 $y'=-2$，切线为 $\ans{y=-2x}$。
+
+\q{12}{高阶乘积求导：$23040$}
+$f(x)=x^2\cos2x$。由莱布尼茨公式，$x=0$ 时，只有对 $x^2$ 求两次导数的一项不为零：
+\[
+f^{(10)}(0)=\binom{10}2\cdot2\cdot\left.(\cos2x)^{(8)}\right|_{x=0}
+=45\cdot2\cdot2^8=23040.
+\]
+它本身已是整数，向下取整不变。因此按题目要求填写十进制具体数值
+\[
+\ans{\lfloor f^{(10)}(0)\rfloor=23040}.
+\]
+\tip{本题可以只用乘积求导，不属于泰勒展开题；若课堂尚未讲高阶乘积求导，可暂缓。}
+
+\newpage
+\q{13}{确定线性项：$a=-1,\ b=0$}
+要求 $\lim_{x\to\infty}(\sqrt[3]{1-x^3}-ax-b)=0$，其中立方根取实立方根。
+令 $u(x)=\sqrt[3]{1-x^3}$。由于
+\[
+\frac{u(x)}x=\sqrt[3]{\frac1{x^3}-1}\longrightarrow-1,
+\]
+若所求差趋于 $0$，将该差除以 $x$，必有 $-1-a=0$，故 $a=-1$。
+再使用立方和公式：
+\[
+(u+x)(u^2-ux+x^2)=u^3+x^3=1,
+\]
+而
+\[
+u^2-ux+x^2=\left(u-\frac x2\right)^2+\frac34x^2\ge\frac34x^2.
+\]
+从而 $0<u+x\le4/(3x^2)\to0$。因此 $u+x-b\to-b$，只能取 $b=0$。
+综上 $\ans{a=-1,\qquad b=0}$。上述估计同时适用于 $x\to\pm\infty$，无需泰勒展开或渐近线理论。
+
+\q{14}{左右导数与底数的读法}
+扫描中底数字形接近 $c$；若原意为常见的 $\ee^{1/x}$，左右导数分别为 $1,0$。
+为完整覆盖题面，这里先按正底数 $c$ 写出分类：
+\[
+f(x)=\begin{cases}\dfrac{x}{1+c^{1/x}},&x\ne0,\\0,&x=0,\end{cases}
+\qquad c>0.
+\]
+题面没有注明 $c$ 的范围；若读作参数 $c$，就不能无条件只给一组数。按定义，
+\[
+\frac{f(h)-f(0)}h=\frac1{1+c^{1/h}},\qquad
+c^{1/h}=\exp\left(\frac{\ln c}{h}\right).
+\]
+\begin{itemize}
+\item $c>1$ 时，$h\to0^-$ 对应 $c^{1/h}\to0$，$h\to0^+$ 对应 $c^{1/h}\to+\infty$。
+\item $0<c<1$ 时，两侧情况交换。
+\item $c=1$ 时，$f(h)=h/2$，两侧导数均为 $1/2$。
+\end{itemize}
+故完整答案为
+\[
+\ans{\begin{array}{c|cc}
+\text{底数} & f'_-(0) & f'_+(0)\\\hline
+c>1\text{（含 }c=\ee\text{）} &1&0\\
+0<c<1 &0&1\\
+c=1 &1/2&1/2
+\end{array}}
+\]
+当 $c\ne1$ 时，左右导数不等，$f'(0)$ 不存在；当 $c=1$ 时，$f'(0)=1/2$。
+无论哪种正底数，均有 $|f(x)|\le|x|$，所以函数在 $0$ 处连续。
+
+\newpage
+\q{15}{极限的 $\varepsilon$--$\delta$ 定义与验证}
+要证明 $\lim_{x\to1}(x^3+x)=2$。
+
+\textbf{(1) 写出定义。}对任意 $\varepsilon>0$，存在 $\delta>0$，使得对所有实数 $x$，只要
+\[
+0<|x-1|<\delta,
+\]
+就有 $|(x^3+x)-2|<\varepsilon$。量词顺序可简记为
+\[
+\forall\varepsilon>0\ \exists\delta>0\ \forall x\in\R:
+\quad0<|x-1|<\delta\Longrightarrow|x^3+x-2|<\varepsilon.
+\]
+
+\textbf{(2) 从定义验证。}分解
+\[
+x^3+x-2=(x-1)(x^2+x+2).
+\]
+当 $|x-1|<1$ 时，$0<x<2$，因此 $|x^2+x+2|<8$。
+任给 $\varepsilon>0$，取
+\[
+\ans{\delta=\min\left\{1,\frac\varepsilon8\right\}}.
+\]
+当 $0<|x-1|<\delta$ 时，
+\[
+|x^3+x-2|=|x-1|\,|x^2+x+2|<8|x-1|<8\delta\le\varepsilon.
+\]
+这就完成了定义证明。
+
+\q{16}{连续的无不动点函数及其迭代}
+已知 $f:\R\to\R$ 连续且 $f(x)\ne x$ 对所有实数成立，取 $x_0=c$，迭代 $x_{n+1}=f(x_n)$。
+
+\textbf{(1) 与恒等函数的大小关系不能改变。}设 $F(x)=f(x)-x$，则 $F$ 连续且处处非零。
+若存在 $u,v$ 使 $F(u)>0$ 而 $F(v)<0$，由介值定理，$u,v$ 之间必有 $\xi$ 使 $F(\xi)=0$，即 $f(\xi)=\xi$，与题设矛盾。因此
+\[
+\ans{f(x)>x\text{ 对一切 }x\text{ 成立，或 }f(x)<x\text{ 对一切 }x\text{ 成立}.}
+\]
+
+\textbf{(2) 迭代数列无界。}若 $f(x)>x$ 恒成立，则 $x_{n+1}>x_n$，数列严格递增。
+假如它有上界，单调有界定理给出有限极限 $\ell$；由 $f$ 连续及递推式，得到
+$\ell=f(\ell)$，矛盾。所以数列无上界，且 $x_n\to+\infty$。
+
+若 $f(x)<x$ 恒成立，则同理数列严格递减；若有下界，也会得到有限不动点。故它无下界，且 $x_n\to-\infty$。两种情形都证明了无界。
+\tip{原卷写 $x_0=c$ 却把递推条件写成 $n\ge1$，没有由 $x_0$ 定义 $x_1$。按通常意图应为 $n\ge0$；即便逐字按 $n\ge1$ 理解，只要另给任意实数 $x_1$，以上结论仍适用于后续迭代。}
+
+\newpage
+\q{17}{切线迭代求零点：存在、公式与收敛}
+本题 $f(x)=x^3+x-1$，从 $P_0=(1,1)$ 出发，初值为 $x_0=1$。
+
+\textbf{(1) 零点存在且唯一。}有
+\[
+f\left(\frac35\right)=\frac{27}{125}+\frac35-1=-\frac{23}{125}<0,
+\qquad f(1)=1>0.
+\]
+由连续函数的介值定理，存在 $\alpha\in(3/5,1)$ 使 $f(\alpha)=0$。
+对任意 $v>u$，
+\[
+f(v)-f(u)=(v-u)(v^2+uv+u^2+1)>0,
+\]
+其中 $v^2+uv+u^2=(v+u/2)^2+3u^2/4\ge0$。故 $f$ 严格增加，实零点唯一。
+
+\textbf{(2) 从切线方程导出递推。}在 $(x_n,f(x_n))$ 处的切线为
+\[
+y-f(x_n)=f'(x_n)(x-x_n).
+\]
+由于 $f'(x_n)=3x_n^2+1>0$，切线与 $x$ 轴的交点横坐标满足
+\[
+\ans{x_{n+1}=x_n-\frac{x_n^3+x_n-1}{3x_n^2+1}
+=\frac{2x_n^3+1}{3x_n^2+1}=:g(x_n),\quad x_0=1.}
+\]
+这就是由题面几何步骤得到的牛顿迭代，不需要预先记忆算法公式。
+
+\textbf{(3) 用代数恒等式证明收敛。}利用 $\alpha^3+\alpha=1$，可分解
+\begin{align*}
+g(x)-\alpha
+&=\frac{2x^3+1-\alpha(3x^2+1)}{3x^2+1}\\
+&=\frac{2x^3-3\alpha x^2+\alpha^3}{3x^2+1}
+=\frac{(x-\alpha)^2(2x+\alpha)}{3x^2+1}.
+\end{align*}
+若 $x>\alpha>0$，上式为正；另一方面 $f(x)>f(\alpha)=0$，从而
+$g(x)=x-f(x)/(3x^2+1)<x$。因此
+\[
+x>\alpha\quad\Longrightarrow\quad\alpha<g(x)<x.
+\]
+从 $x_0=1>\alpha$ 归纳得 $\alpha<x_{n+1}<x_n\le1$，数列严格递减且以下界 $\alpha$ 有界，故存在极限 $\ell\ge\alpha$。
+递推式取极限得 $\ell=g(\ell)$，即
+\[
+\ell(3\ell^2+1)=2\ell^3+1\quad\Longrightarrow\quad\ell^3+\ell-1=0.
+\]
+由零点唯一性，$\ell=\alpha$，所以 $\ans{x_n\longrightarrow\alpha}$。
+\tip{上述收敛证明只用介值定理、单调有界定理和多项式分解，没有使用凸性判定或泰勒余项。}
+
+\newpage
+\q{17（续）}{误差估计与 100 位精度}
+\textbf{(4) 结论成立；甚至 $x_{10}$ 就满足要求。}令 $e_n=x_n-\alpha>0$。由上一页的恒等式，
+\[
+e_{n+1}=e_n^2\frac{2x_n+\alpha}{3x_n^2+1}.
+\]
+由于 $0<\alpha<x_n$，有 $2x_n+\alpha<3x_n$；又
+\[
+3x_n^2+1-3x_n=3\left(x_n-\frac12\right)^2+\frac14>0.
+\]
+因此 $0<e_{n+1}<e_n^2$。归纳得到
+\[
+e_n\le e_0^{\,2^n},\qquad e_0=1-\alpha<\frac25<\frac12,
+\]
+从而 $e_n<2^{-2^n}$。取 $n=10$，因为 $2^{10}=1024>10^3$，
+\[
+0<x_{10}-\alpha<2^{-1024}<2^{-1000}
+=\bigl(2^{-10}\bigr)^{100}<10^{-300}<10^{-100}.
+\]
+而数列递减，$0<x_{11}-\alpha<x_{10}-\alpha$，因此
+\[
+\ans{|x_{11}-\alpha|<10^{-100}}.
+\]
+\tip{从原题 $x_0=1$ 计起，10 次更新得到 $x_{10}$；原卷末问写成 $x_{11}$，存在一位下标差。这里同时证明了 $x_{10}$ 和 $x_{11}$ 均满足要求，因此不影响“是”的结论。}
+
+\textbf{可复核的数值示例。}以下数值只用于观察误差下降速度；上面的不等式才是严格的精度保证。它们由随附的高精度核对脚本生成：
+\begin{center}
+\input{newton-25-table.tex}
+\end{center}
+\[
+\alpha\approx0.68232780382801932736948373971105.
+\]
+实际运行迭代时还会有舍入误差；若要输出 100 位小数，应采用足够高的计算精度。题中的精度条件是误差 $<10^{-100}$，上述证明针对精确实数运算。
+\end{document}
