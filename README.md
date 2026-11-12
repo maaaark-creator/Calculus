@@ -4,7 +4,7 @@
 
 - **Instructor:** Prof. Sun Wei
 - **Teaching Assistant:** Du Runzhuo
-- **Office Hours:** Please contact Prof. Sun Wei or the TA to arrange an appointment.
+- **Office Hours:** Please contact Prof. Sun Wei or the TA to arrange an appointment.   **11月18日晚上8点开始 图书馆讨论室101-3答疑**
 - **考试安排：** 11 月 12 日（周四）习题课 Quiz，范围为第三章；11 月 19 日（周四）期中考试，范围截至洛必达法则（包括）。
 
 ## Midterm Practice · 期中模拟卷
