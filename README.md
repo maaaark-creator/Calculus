@@ -6,6 +6,7 @@
 - **Teaching Assistant:** Du Runzhuo
 - **Office Hours:** Please contact Prof. Sun Wei or the TA to arrange an appointment.   **11月18日晚上8点开始 图书馆讨论室101-3答疑**
 - **考试安排：** 11 月 19 日（周四）期中考试，范围截至洛必达法则（包括）。
+- **quiz2 feedback（important)：** 第一题不是先算导数再代入x0算极限，请看导数定义！！！。
 
 ## Acknowledgments
 
